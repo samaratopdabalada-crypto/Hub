@@ -1,0 +1,60 @@
+--[[
+Infinite Jump Script
+Cria um botão "Infinite Jump" que, ao ser ativado, permite pular infinitamente.
+Coloque este script como LocalScript dentro de StarterGui.
+]]
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+-- GUI Setup
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "InfiniteJumpGui"
+screenGui.Parent = player:WaitForChild("PlayerGui")
+
+local jumpButton = Instance.new("TextButton")
+jumpButton.Size = UDim2.new(0, 150, 0, 50)
+jumpButton.Position = UDim2.new(0, 10, 0, 10)
+jumpButton.Text = "Infinite Jump [Desativado]"
+jumpButton.BackgroundColor3 = Color3.fromRGB(230, 80, 80)
+jumpButton.Parent = screenGui
+
+local infiniteJumpEnabled = false
+local connection
+
+local function enableInfiniteJump()
+    if not connection then
+        connection = game:GetService("UserInputService").JumpRequest:Connect(function()
+            if infiniteJumpEnabled then
+                humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+            end
+        end)
+    end
+end
+
+local function disableInfiniteJump()
+    if connection then
+        connection:Disconnect()
+        connection = nil
+    end
+end
+
+jumpButton.MouseButton1Click:Connect(function()
+    infiniteJumpEnabled = not infiniteJumpEnabled
+    if infiniteJumpEnabled then
+        jumpButton.Text = "Infinite Jump [Ativado]"
+        jumpButton.BackgroundColor3 = Color3.fromRGB(80, 230, 80)
+        enableInfiniteJump()
+    else
+        jumpButton.Text = "Infinite Jump [Desativado]"
+        jumpButton.BackgroundColor3 = Color3.fromRGB(230, 80, 80)
+        disableInfiniteJump()
+    end
+end)
+
+-- Atualiza humanoid se personagem for resetado
+player.CharacterAdded:Connect(function(char)
+    character = char
+    humanoid = character:WaitForChild("Humanoid")
+end)
