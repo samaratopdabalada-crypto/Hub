@@ -1,0 +1,104 @@
+loadstring([[
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local ESPEnabled = false
+local ESPObjects = {}
+local Highlights = {}
+
+-- Função para criar ESP
+local function createESP(player)
+    if player == LocalPlayer then return end
+    if ESPObjects[player] then ESPObjects[player]:Destroy() end
+    -- BillboardGui para nome vermelho
+    local billboard = Instance.new("BillboardGui")
+    billboard.Name = "ESP"
+    billboard.Size = UDim2.new(0, 100, 0, 40)
+    billboard.AlwaysOnTop = true
+
+    local textLabel = Instance.new("TextLabel")
+    textLabel.Parent = billboard
+    textLabel.Size = UDim2.new(1, 0, 1, 0)
+    textLabel.Text = player.Name
+    textLabel.BackgroundTransparency = 1
+    textLabel.TextColor3 = Color3.new(1, 0, 0) -- vermelho
+    textLabel.TextStrokeTransparency = 0.5
+
+    local function onCharacterAdded(character)
+        local head = character:FindFirstChild("Head")
+        if head then
+            billboard.Adornee = head
+            billboard.Parent = game:GetService("CoreGui")
+        end
+        -- Highlight vermelho
+        if not Highlights[player] then
+            local highlight = Instance.new("Highlight")
+            highlight.FillColor = Color3.new(1, 0, 0)
+            highlight.OutlineColor = Color3.new(1, 0, 0)
+            highlight.Adornee = character
+            highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+            highlight.Parent = game:GetService("CoreGui")
+            Highlights[player] = highlight
+        else
+            Highlights[player].Adornee = character
+        end
+    end
+
+    if player.Character then
+        onCharacterAdded(player.Character)
+    end
+    player.CharacterAdded:Connect(onCharacterAdded)
+    ESPObjects[player] = billboard
+end
+
+-- Remover ESP
+local function removeESP(player)
+    if ESPObjects[player] then
+        ESPObjects[player]:Destroy()
+        ESPObjects[player] = nil
+    end
+    if Highlights[player] then
+        Highlights[player]:Destroy()
+        Highlights[player] = nil
+    end
+end
+
+-- Ativar ESP
+local function enableESP()
+    for _, player in ipairs(Players:GetPlayers()) do
+        createESP(player)
+    end
+    Players.PlayerAdded:Connect(createESP)
+end
+
+-- Desativar ESP
+local function disableESP()
+    for _, player in ipairs(Players:GetPlayers()) do
+        removeESP(player)
+    end
+end
+
+-- Botão na tela
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "ESPGui"
+ScreenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
+
+local Button = Instance.new("TextButton")
+Button.Size = UDim2.new(0, 120, 0, 40)
+Button.Position = UDim2.new(0, 20, 0, 80)
+Button.Text = "ESP: OFF"
+Button.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+Button.TextColor3 = Color3.new(1, 1, 1)
+Button.TextScaled = true
+Button.Parent = ScreenGui
+
+Button.MouseButton1Click:Connect(function()
+    ESPEnabled = not ESPEnabled
+    if ESPEnabled then
+        Button.Text = "ESP: ON"
+        enableESP()
+    else
+        Button.Text = "ESP: OFF"
+        disableESP()
+    end
+end)
+]])()
