@@ -1,0 +1,134 @@
+--// Criar ScreenGui principal
+local gui = Instance.new("ScreenGui")
+gui.Parent = game.Players.LocalPlayer.PlayerGui
+
+--// Emoji Arrastável
+local emojiBtn = Instance.new("TextButton")
+emojiBtn.Size = UDim2.new(0, 60, 0, 60)
+emojiBtn.Position = UDim2.new(0.1, 0, 0.1, 0)
+emojiBtn.BackgroundTransparency = 1
+emojiBtn.Text = "🤑"
+emojiBtn.TextScaled = true
+emojiBtn.Parent = gui
+emojiBtn.Name = "ArrastavelEmoji"
+
+--// Permitir arrastar o emoji
+local dragging
+local dragInput
+local dragStart
+local startPos
+
+emojiBtn.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = true
+        dragStart = input.Position
+        startPos = emojiBtn.Position
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+            end
+        end)
+    end
+end)
+
+emojiBtn.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement then
+        dragInput = input
+    end
+end)
+
+game:GetService("UserInputService").InputChanged:Connect(function(input)
+    if input == dragInput and dragging then
+        local delta = input.Position - dragStart
+        emojiBtn.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+    end
+end)
+
+--// GUI "apelao" (inicialmente invisível)
+local apelaoFrame = Instance.new("Frame")
+apelaoFrame.Size = UDim2.new(0, 180, 0, 120)
+apelaoFrame.Position = UDim2.new(0.5, -90, 0.5, -60)
+apelaoFrame.BackgroundColor3 = Color3.fromRGB(40,40,40)
+apelaoFrame.Visible = false
+apelaoFrame.Parent = gui
+apelaoFrame.Name = "apelao"
+
+local titulo = Instance.new("TextLabel")
+titulo.Size = UDim2.new(1,0,0.3,0)
+titulo.Position = UDim2.new(0,0,0,0)
+titulo.BackgroundTransparency = 1
+titulo.Text = "GUI APELAO"
+titulo.TextColor3 = Color3.fromRGB(255,255,127)
+titulo.TextScaled = true
+titulo.Parent = apelaoFrame
+
+local botao = Instance.new("TextButton")
+botao.Size = UDim2.new(0.8,0,0.35,0)
+botao.Position = UDim2.new(0.1,0,0.55,0)
+botao.Text = "Ativar"
+botao.BackgroundColor3 = Color3.fromRGB(0,170,0)
+botao.TextColor3 = Color3.new(1,1,1)
+botao.TextScaled = true
+botao.Parent = apelaoFrame
+
+--// Abrir a GUI ao clicar no emoji
+emojiBtn.MouseButton1Click:Connect(function()
+    apelaoFrame.Visible = not apelaoFrame.Visible
+end)
+
+--// Função de voo na direção da câmera
+local flying = false
+local bp, bg
+local SPEED = 50 -- Velocidade do voo, pode ajustar
+
+local function startFly()
+    local player = game.Players.LocalPlayer
+    local char = player.Character
+    if not char or not char:FindFirstChild("HumanoidRootPart") then return end
+
+    bp = Instance.new("BodyVelocity")
+    bp.MaxForce = Vector3.new(1e5, 1e5, 1e5)
+    bp.Velocity = Vector3.new(0,0,0)
+    bp.Parent = char.HumanoidRootPart
+
+    bg = Instance.new("BodyGyro")
+    bg.MaxTorque = Vector3.new(0,0,0)
+    bg.Parent = char.HumanoidRootPart
+
+    flying = true
+
+    -- loop para voar na direção da câmera
+    spawn(function()
+        while flying and bp and char and char:FindFirstChild("HumanoidRootPart") do
+            local camera = workspace.CurrentCamera
+            bp.Velocity = camera.CFrame.LookVector * SPEED
+            wait(0.01)
+        end
+    end)
+end
+
+local function stopFly()
+    flying = false
+    local char = game.Players.LocalPlayer.Character
+    if char and char:FindFirstChild("HumanoidRootPart") then
+        if char.HumanoidRootPart:FindFirstChildOfClass("BodyVelocity") then
+            char.HumanoidRootPart:FindFirstChildOfClass("BodyVelocity"):Destroy()
+        end
+        if char.HumanoidRootPart:FindFirstChildOfClass("BodyGyro") then
+            char.HumanoidRootPart:FindFirstChildOfClass("BodyGyro"):Destroy()
+        end
+    end
+end
+
+--// Botão ativar/desativar
+botao.MouseButton1Click:Connect(function()
+    if not flying then
+        startFly()
+        botao.Text = "Desativar"
+        botao.BackgroundColor3 = Color3.fromRGB(170,0,0)
+    else
+        stopFly()
+        botao.Text = "Ativar"
+        botao.BackgroundColor3 = Color3.fromRGB(0,170,0)
+    end
+end)
