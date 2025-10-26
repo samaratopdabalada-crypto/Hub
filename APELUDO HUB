@@ -1,0 +1,252 @@
+--// Proteção para reaparecer após morte
+local player = game.Players.LocalPlayer
+
+local function criarGUI()
+    -- Remover GUI antiga se existir
+    if player:FindFirstChild("PlayerGui") and player.PlayerGui:FindFirstChild("APELUDO_HUB_GUI") then
+        player.PlayerGui.APELUDO_HUB_GUI:Destroy()
+    end
+
+    --// Criar ScreenGui principal
+    local gui = Instance.new("ScreenGui")
+    gui.Name = "APELUDO_HUB_GUI"
+    gui.Parent = player.PlayerGui
+
+    --// Bola Arrastável (substitui o emoji)
+    local bolaBtn = Instance.new("Frame")
+    bolaBtn.Size = UDim2.new(0, 60, 0, 60)
+    bolaBtn.Position = UDim2.new(0.1, 0, 0.1, 0)
+    bolaBtn.BackgroundColor3 = Color3.new(0,0,0)
+    bolaBtn.BackgroundTransparency = 0
+    bolaBtn.BorderSizePixel = 0
+    bolaBtn.Name = "ArrastavelBola"
+    bolaBtn.Parent = gui
+    bolaBtn.ClipsDescendants = true
+
+    -- Deixa o frame redondo
+    local uicorner = Instance.new("UICorner")
+    uicorner.CornerRadius = UDim.new(1,0)
+    uicorner.Parent = bolaBtn
+
+    local bolaBtnLabel = Instance.new("TextLabel")
+    bolaBtnLabel.Size = UDim2.new(1,0,1,0)
+    bolaBtnLabel.Position = UDim2.new(0,0,0,0)
+    bolaBtnLabel.BackgroundTransparency = 1
+    bolaBtnLabel.Text = "APELUDO HUB"
+    bolaBtnLabel.TextColor3 = Color3.fromRGB(255,255,255)
+    bolaBtnLabel.TextScaled = true
+    bolaBtnLabel.Font = Enum.Font.GothamBold
+    bolaBtnLabel.Parent = bolaBtn
+
+    --// Permitir arrastar a bola
+    local dragging = false
+    local dragInput
+    local dragStart
+    local startPos
+
+    bolaBtn.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            dragging = true
+            dragStart = input.Position
+            startPos = bolaBtn.Position
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragging = false
+                end
+            end)
+        end
+    end)
+
+    bolaBtn.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement then
+            dragInput = input
+        end
+    end)
+
+    game:GetService("UserInputService").InputChanged:Connect(function(input)
+        if input == dragInput and dragging then
+            local delta = input.Position - dragStart
+            bolaBtn.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+        end
+    end)
+
+    --// GUI "apelao" (inicialmente invisível)
+    local apelaoFrame = Instance.new("Frame")
+    apelaoFrame.Size = UDim2.new(0, 180, 0, 180)
+    apelaoFrame.Position = UDim2.new(0.5, -90, 0.5, -90)
+    apelaoFrame.BackgroundColor3 = Color3.fromRGB(40,40,40)
+    apelaoFrame.Visible = false
+    apelaoFrame.Parent = gui
+    apelaoFrame.Name = "apelao"
+
+    local titulo = Instance.new("TextLabel")
+    titulo.Size = UDim2.new(1,0,0.2,0)
+    titulo.Position = UDim2.new(0,0,0,0)
+    titulo.BackgroundTransparency = 1
+    titulo.Text = "GUI APELAO"
+    titulo.TextColor3 = Color3.fromRGB(255,255,127)
+    titulo.TextScaled = true
+    titulo.Parent = apelaoFrame
+
+    local botao = Instance.new("TextButton")
+    botao.Size = UDim2.new(0.8,0,0.18,0)
+    botao.Position = UDim2.new(0.1,0,0.22,0)
+    botao.Text = "Ativar"
+    botao.BackgroundColor3 = Color3.fromRGB(0,170,0)
+    botao.TextColor3 = Color3.new(1,1,1)
+    botao.TextScaled = true
+    botao.Parent = apelaoFrame
+
+    local botaoRagdoll = Instance.new("TextButton")
+    botaoRagdoll.Size = UDim2.new(0.8,0,0.18,0)
+    botaoRagdoll.Position = UDim2.new(0.1,0,0.44,0)
+    botaoRagdoll.Text = "Ativar Ragdoll"
+    botaoRagdoll.BackgroundColor3 = Color3.fromRGB(20,100,200)
+    botaoRagdoll.TextColor3 = Color3.new(1,1,1)
+    botaoRagdoll.TextScaled = true
+    botaoRagdoll.Parent = apelaoFrame
+
+    local botaoNaoRagdoll = Instance.new("TextButton")
+    botaoNaoRagdoll.Size = UDim2.new(0.8,0,0.18,0)
+    botaoNaoRagdoll.Position = UDim2.new(0.1,0,0.66,0)
+    botaoNaoRagdoll.Text = "Ver Não-Ragdoll"
+    botaoNaoRagdoll.BackgroundColor3 = Color3.fromRGB(200,100,20)
+    botaoNaoRagdoll.TextColor3 = Color3.new(1,1,1)
+    botaoNaoRagdoll.TextScaled = true
+    botaoNaoRagdoll.Parent = apelaoFrame
+
+    --// Abrir a GUI ao clicar na bola (se não estiver arrastando)
+    bolaBtn.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 and not dragging then
+            apelaoFrame.Visible = not apelaoFrame.Visible
+        end
+    end)
+
+    --// Função de voo na direção da câmera
+    local flying = false
+    local bp, bg
+    local SPEED = 50
+
+    local function startFly()
+        local char = player.Character
+        if not char or not char:FindFirstChild("HumanoidRootPart") then return end
+
+        bp = Instance.new("BodyVelocity")
+        bp.MaxForce = Vector3.new(1e5, 1e5, 1e5)
+        bp.Velocity = Vector3.new(0,0,0)
+        bp.Parent = char.HumanoidRootPart
+
+        bg = Instance.new("BodyGyro")
+        bg.MaxTorque = Vector3.new(0,0,0)
+        bg.Parent = char.HumanoidRootPart
+
+        flying = true
+        spawn(function()
+            while flying and bp and char and char:FindFirstChild("HumanoidRootPart") do
+                local camera = workspace.CurrentCamera
+                bp.Velocity = camera.CFrame.LookVector * SPEED
+                wait(0.01)
+            end
+        end)
+    end
+
+    local function stopFly()
+        flying = false
+        local char = player.Character
+        if char and char:FindFirstChild("HumanoidRootPart") then
+            if char.HumanoidRootPart:FindFirstChildOfClass("BodyVelocity") then
+                char.HumanoidRootPart:FindFirstChildOfClass("BodyVelocity"):Destroy()
+            end
+            if char.HumanoidRootPart:FindFirstChildOfClass("BodyGyro") then
+                char.HumanoidRootPart:FindFirstChildOfClass("BodyGyro"):Destroy()
+            end
+        end
+    end
+
+    botao.MouseButton1Click:Connect(function()
+        if not flying then
+            startFly()
+            botao.Text = "Desativar"
+            botao.BackgroundColor3 = Color3.fromRGB(170,0,0)
+        else
+            stopFly()
+            botao.Text = "Ativar"
+            botao.BackgroundColor3 = Color3.fromRGB(0,170,0)
+        end
+    end)
+
+    -- Toggle system for highlights
+    local ragdollActive = false
+    local naoRagdollActive = false
+
+    local function limparHighlights()
+        for _, obj in ipairs(workspace:GetDescendants()) do
+            if obj:IsA("Highlight") and obj.Name == "HighlightRagdoll" then
+                obj:Destroy()
+            end
+        end
+    end
+
+    botaoRagdoll.MouseButton1Click:Connect(function()
+        if not ragdollActive then
+            limparHighlights()
+            for _, obj in ipairs(workspace:GetDescendants()) do
+                if (obj:IsA("Model") or obj:IsA("Part")) and string.lower(obj.Name):find("ragdoll") then
+                    local highlight = Instance.new("Highlight")
+                    highlight.Name = "HighlightRagdoll"
+                    highlight.FillColor = Color3.fromRGB(0, 255, 0)
+                    highlight.OutlineColor = Color3.fromRGB(0, 70, 0)
+                    highlight.Parent = obj
+                end
+            end
+            ragdollActive = true
+            naoRagdollActive = false
+            botaoRagdoll.Text = "Desativar Ragdoll"
+            botaoRagdoll.BackgroundColor3 = Color3.fromRGB(170,0,0)
+            botaoNaoRagdoll.Text = "Ver Não-Ragdoll"
+            botaoNaoRagdoll.BackgroundColor3 = Color3.fromRGB(200,100,20)
+        else
+            limparHighlights()
+            ragdollActive = false
+            botaoRagdoll.Text = "Ativar Ragdoll"
+            botaoRagdoll.BackgroundColor3 = Color3.fromRGB(20,100,200)
+        end
+    end)
+
+    botaoNaoRagdoll.MouseButton1Click:Connect(function()
+        if not naoRagdollActive then
+            limparHighlights()
+            for _, obj in ipairs(workspace:GetDescendants()) do
+                if (obj:IsA("Model") or obj:IsA("Part")) and not string.lower(obj.Name):find("ragdoll") then
+                    local highlight = Instance.new("Highlight")
+                    highlight.Name = "HighlightRagdoll"
+                    highlight.FillColor = Color3.fromRGB(255, 255, 0)
+                    highlight.OutlineColor = Color3.fromRGB(90, 90, 0)
+                    highlight.Parent = obj
+                end
+            end
+            naoRagdollActive = true
+            ragdollActive = false
+            botaoNaoRagdoll.Text = "Desativar Não-Ragdoll"
+            botaoNaoRagdoll.BackgroundColor3 = Color3.fromRGB(170,0,0)
+            botaoRagdoll.Text = "Ativar Ragdoll"
+            botaoRagdoll.BackgroundColor3 = Color3.fromRGB(20,100,200)
+        else
+            limparHighlights()
+            naoRagdollActive = false
+            botaoNaoRagdoll.Text = "Ver Não-Ragdoll"
+            botaoNaoRagdoll.BackgroundColor3 = Color3.fromRGB(200,100,20)
+        end
+    end)
+
+    apelaoFrame.MouseLeave:Connect(limparHighlights)
+end
+
+-- Criar GUI ao entrar no jogo
+criarGUI()
+
+-- Criar GUI toda vez que o personagem respawnar
+player.CharacterAdded:Connect(function()
+    wait(1)
+    criarGUI()
+end)
