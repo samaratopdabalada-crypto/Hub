@@ -1,0 +1,83 @@
+-- Invisible Hub by Thiagocag23 para Executor Delta
+
+-- Criação da GUI principal
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "INVISIBLE_HUB"
+-- Usa CoreGui para garantir que aparece com executor
+ScreenGui.Parent = game:GetService("CoreGui")
+
+local Frame = Instance.new("Frame")
+Frame.Size = UDim2.new(0, 250, 0, 140)
+Frame.Position = UDim2.new(0.5, -125, 0.5, -70)
+Frame.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+Frame.BorderSizePixel = 0
+Frame.Parent = ScreenGui
+
+local Title = Instance.new("TextLabel")
+Title.Size = UDim2.new(1, 0, 0, 36)
+Title.Position = UDim2.new(0, 0, 0, 0)
+Title.BackgroundTransparency = 1
+Title.Text = "INVISIBLE HUB"
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.Font = Enum.Font.GothamBold
+Title.TextSize = 22
+Title.Parent = Frame
+
+local Sub = Instance.new("TextLabel")
+Sub.Size = UDim2.new(1, 0, 0, 20)
+Sub.Position = UDim2.new(0, 0, 0, 36)
+Sub.BackgroundTransparency = 1
+Sub.Text = "by Thiagocag23"
+Sub.TextColor3 = Color3.fromRGB(150, 150, 150)
+Sub.Font = Enum.Font.Gotham
+Sub.TextSize = 16
+Sub.Parent = Frame
+
+local Button = Instance.new("TextButton")
+Button.Size = UDim2.new(0, 180, 0, 40)
+Button.Position = UDim2.new(0.5, -90, 0, 80)
+Button.BackgroundColor3 = Color3.fromRGB(75, 75, 75)
+Button.TextColor3 = Color3.fromRGB(255, 255, 255)
+Button.Font = Enum.Font.GothamBold
+Button.Text = "Ativar Invisibilidade"
+Button.TextSize = 20
+Button.Parent = Frame
+
+local invisible = false
+
+function setInvisible(isInvisible)
+    local plr = game.Players.LocalPlayer
+    if not plr then return end
+    local char = plr.Character or plr.CharacterAdded:Wait()
+    for _, v in pairs(char:GetDescendants()) do
+        if v:IsA("BasePart") and v.Name ~= "HumanoidRootPart" then
+            v.Transparency = isInvisible and 1 or 0
+            if v:FindFirstChildOfClass("Decal") then
+                for _, d in pairs(v:GetChildren()) do
+                    if d:IsA("Decal") then
+                        d.Transparency = isInvisible and 1 or 0
+                    end
+                end
+            end
+        elseif v:IsA("Accessory") and v:FindFirstChild("Handle") then
+            v.Handle.Transparency = isInvisible and 1 or 0
+        end
+    end
+    -- Opcional: Esconde o nome acima do personagem
+    local head = char:FindFirstChild("Head")
+    if head and head:FindFirstChild("face") then
+        head.face.Transparency = isInvisible and 1 or 0
+    end
+end
+
+Button.MouseButton1Click:Connect(function()
+    invisible = not invisible
+    setInvisible(invisible)
+    if invisible then
+        Button.Text = "Desativar Invisibilidade"
+        Button.BackgroundColor3 = Color3.fromRGB(200, 80, 80)
+    else
+        Button.Text = "Ativar Invisibilidade"
+        Button.BackgroundColor3 = Color3.fromRGB(75, 75, 75)
+    end
+end)
