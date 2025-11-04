@@ -1,0 +1,191 @@
+-- DESYNC Script completo e ajustado para Roblox
+-- Cria uma bola preta chamada "DESYNC OP" que abre uma GUI para ativar/desativar o efeito de desync/anti-hit
+-- Remove clone e reseta estado ao morrer/reaparecer
+
+-- Utilitário: Remover GUIs anteriores duplicadas
+pcall(function() game:GetService("CoreGui").DESYNC_OP:Destroy() end)
+
+-- Criação do ScreenGui
+local DESYNC_BALL = Instance.new("ScreenGui")
+DESYNC_BALL.Name = "DESYNC_OP"
+DESYNC_BALL.ResetOnSpawn = false
+DESYNC_BALL.Parent = game:GetService("CoreGui")
+
+-- Bola preta (usando ImageButton)
+local Ball = Instance.new("ImageButton")
+Ball.Name = "Ball"
+Ball.Parent = DESYNC_BALL
+Ball.BackgroundTransparency = 1
+Ball.Position = UDim2.new(0, 25, 0, 250)
+Ball.Size = UDim2.new(0, 40, 0, 40)
+Ball.Image = "rbxassetid://3570695787"
+Ball.ImageColor3 = Color3.new(0, 0, 0)
+Ball.AutoButtonColor = true
+
+-- Label na bola
+local Label = Instance.new("TextLabel", Ball)
+Label.Size = UDim2.new(1, 0, 1, 0)
+Label.BackgroundTransparency = 1
+Label.Text = "DESYNC\nOP"
+Label.TextColor3 = Color3.new(1, 1, 1)
+Label.TextScaled = true
+Label.Font = Enum.Font.GothamSemibold
+
+-- Interface principal (Frame)
+local GuiMain = Instance.new("Frame")
+GuiMain.Name = "DESYNC_GUI"
+GuiMain.Size = UDim2.new(0, 200, 0, 120)
+GuiMain.Position = UDim2.new(0.5, -100, 0.5, -60)
+GuiMain.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+GuiMain.BackgroundTransparency = 0.15
+GuiMain.Visible = false
+GuiMain.Parent = DESYNC_BALL
+local UICorner = Instance.new("UICorner", GuiMain)
+UICorner.CornerRadius = UDim.new(0, 15)
+
+-- Botão DESYNC
+local BtnDesync = Instance.new("TextButton", GuiMain)
+BtnDesync.Size = UDim2.new(0, 170, 0, 32)
+BtnDesync.Position = UDim2.new(0, 15, 0, 20)
+BtnDesync.BackgroundColor3 = Color3.fromRGB(30,130,255)
+BtnDesync.Text = "DESYNC"
+BtnDesync.TextColor3 = Color3.new(1,1,1)
+BtnDesync.Font = Enum.Font.GothamBold
+BtnDesync.TextSize = 20
+
+-- Botão FECHAR/DESATIVAR
+local BtnFechar = Instance.new("TextButton", GuiMain)
+BtnFechar.Size = UDim2.new(0, 170, 0, 24)
+BtnFechar.Position = UDim2.new(0, 15, 0, 66)
+BtnFechar.BackgroundColor3 = Color3.fromRGB(200,50,50)
+BtnFechar.Text = "Fechar/Desativar"
+BtnFechar.TextColor3 = Color3.new(1,1,1)
+BtnFechar.Font = Enum.Font.GothamSemibold
+BtnFechar.TextSize = 17
+
+-- Variáveis e estado
+local DesyncAtivado = false
+local Clone = nil
+local plr = game.Players.LocalPlayer
+
+-- Função para ativar o desync
+local function ativarDesync()
+    local char = plr.Character
+    if not char or not char:FindFirstChild("HumanoidRootPart") then return end
+
+    -- Remove clone antigo se houver
+    if Clone and Clone.Parent then Clone:Destroy() end
+
+    -- Clona e posiciona no lugar original
+    Clone = char:Clone()
+    Clone.Parent = workspace
+    Clone.Name = plr.Name .. "_FAKE"
+    -- Remove scripts do clone
+    for _,d in ipairs(Clone:GetDescendants()) do
+        if d:IsA("LocalScript") or d:IsA("Script") then d:Destroy() end
+    end
+    -- Para garantir o clone "fixo", remove BodyMovers do clone
+    for _,bm in ipairs(Clone:GetDescendants()) do
+        if bm:IsA("BodyMover") then bm:Destroy() end
+    end
+
+    -- Torna o player real invisível e intocável
+    for _,v in pairs(char:GetDescendants()) do
+        if v:IsA("BasePart") then
+            v.CanCollide = false
+            v.Transparency = 1
+            if v:FindFirstChildOfClass("Decal") then
+                for _,decal in ipairs(v:GetChildren()) do
+                    if decal:IsA("Decal") then
+                        decal.Transparency = 1
+                    end
+                end
+            end
+        elseif v:IsA("Accessory") then
+            v.Handle.Transparency = 1
+            for _,obj in ipairs(v.Handle:GetChildren()) do
+                if obj:IsA("Decal") or obj:IsA("Texture") then
+                    obj.Transparency = 1
+                end
+            end
+        end
+    end
+
+    char:MoveTo(Vector3.new(99999,99999,99999)) -- some do mapa!
+    DesyncAtivado = true
+end
+
+-- Função para desativar o desync
+local function desativarDesync()
+    local char = plr.Character
+    if char then
+        -- Volta para area visível do mapa (spawn ou meio do mapa)
+        char:MoveTo(workspace:FindFirstChildWhichIsA("SpawnLocation") and workspace:FindFirstChildWhichIsA("SpawnLocation").Position or Vector3.new(0,20,0))
+        -- Restaura aparência
+        for _,v in pairs(char:GetDescendants()) do
+            if v:IsA("BasePart") then
+                v.CanCollide = true
+                v.Transparency = 0
+                if v:FindFirstChildOfClass("Decal") then
+                    for _,decal in ipairs(v:GetChildren()) do
+                        if decal:IsA("Decal") then
+                            decal.Transparency = 0
+                        end
+                    end
+                end
+            elseif v:IsA("Accessory") then
+                v.Handle.Transparency = 0
+                for _,obj in ipairs(v.Handle:GetChildren()) do
+                    if obj:IsA("Decal") or obj:IsA("Texture") then
+                        obj.Transparency = 0
+                    end
+                end
+            end
+        end
+    end
+    -- Remove clone fake se existir
+    if Clone and Clone.Parent then Clone:Destroy() end
+    DesyncAtivado = false
+end
+
+-- Ao clicar na bola preta, abre a GUI
+Ball.MouseButton1Click:Connect(function()
+    GuiMain.Visible = true
+end)
+
+-- Botão DESYNC ativador
+BtnDesync.MouseButton1Click:Connect(function()
+    if not DesyncAtivado then
+        ativarDesync()
+        BtnDesync.Text = "DESYNC ATIVO"
+        BtnDesync.BackgroundColor3 = Color3.fromRGB(80,220,80)
+    end
+end)
+
+-- Botão Fechar/Desativar
+BtnFechar.MouseButton1Click:Connect(function()
+    -- Fecha GUI e desativa efeito
+    if DesyncAtivado then desativarDesync() end
+    GuiMain.Visible = false
+    BtnDesync.Text = "DESYNC"
+    BtnDesync.BackgroundColor3 = Color3.fromRGB(30,130,255)
+end)
+
+-- Pressionar ESC fecha GUI e desativa o efeito
+game:GetService("UserInputService").InputBegan:Connect(function(input, gp)
+    if input.KeyCode == Enum.KeyCode.Escape and GuiMain.Visible then
+        BtnFechar:FireMouseButton1Click()
+    end
+end)
+
+-- Reset ao morrer/renascer: remove clone e reseta tudo!
+plr.CharacterAdded:Connect(function()
+    -- Remove clone antigo se houver
+    if Clone and Clone.Parent then Clone:Destroy() end
+    DesyncAtivado = false
+    if GuiMain then
+        GuiMain.Visible = false
+        BtnDesync.Text = "DESYNC"
+        BtnDesync.BackgroundColor3 = Color3.fromRGB(30,130,255)
+    end
+end)
