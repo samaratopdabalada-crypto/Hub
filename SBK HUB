@@ -1,0 +1,160 @@
+-- LocalScript dentro de StarterPlayerScripts ou StarterGui
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local RunService = game:GetService("RunService")
+
+-- Variáveis
+local KEY_CORRETA = "SBK"
+local flying = false
+local flySpeed = 50
+
+-- GUI
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = player:WaitForChild("PlayerGui")
+
+-- =======================
+-- TELA DE LOGIN
+-- =======================
+local loginFrame = Instance.new("Frame")
+loginFrame.Size = UDim2.new(0, 400, 0, 200)
+loginFrame.Position = UDim2.new(0.5, -200, 0.5, -100)
+loginFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+loginFrame.BorderSizePixel = 0
+loginFrame.Parent = screenGui
+
+local textLabel = Instance.new("TextLabel")
+textLabel.Size = UDim2.new(1, -20, 0, 50)
+textLabel.Position = UDim2.new(0, 10, 0, 20)
+textLabel.BackgroundTransparency = 1
+textLabel.Text = "Digite a key:"
+textLabel.TextScaled = true
+textLabel.Font = Enum.Font.GothamBold  -- arcade / bloco
+textLabel.TextColor3 = Color3.fromRGB(0, 255, 255)
+textLabel.TextStrokeColor3 = Color3.fromRGB(0, 0, 0)
+textLabel.TextStrokeTransparency = 0
+textLabel.Parent = loginFrame
+
+local textBox = Instance.new("TextBox")
+textBox.Size = UDim2.new(1, -20, 0, 50)
+textBox.Position = UDim2.new(0, 10, 0, 80)
+textBox.Text = ""
+textBox.TextScaled = true
+textBox.ClearTextOnFocus = false
+textBox.Font = Enum.Font.GothamBold
+textBox.TextColor3 = Color3.fromRGB(0, 255, 255)
+textBox.TextStrokeColor3 = Color3.fromRGB(0,0,0)
+textBox.TextStrokeTransparency = 0
+textBox.Parent = loginFrame
+
+local submitButton = Instance.new("TextButton")
+submitButton.Size = UDim2.new(0.5, -10, 0, 40)
+submitButton.Position = UDim2.new(0.25, 0, 0, 150)
+submitButton.Text = "Entrar"
+submitButton.TextScaled = true
+submitButton.Font = Enum.Font.GothamBold
+submitButton.TextColor3 = Color3.fromRGB(0, 255, 255)
+submitButton.TextStrokeColor3 = Color3.fromRGB(0,0,0)
+submitButton.TextStrokeTransparency = 0
+submitButton.BackgroundColor3 = Color3.fromRGB(0, 0, 100)
+submitButton.BorderSizePixel = 0
+submitButton.Parent = loginFrame
+
+-- =======================
+-- EMOJI 🎃
+-- =======================
+local pumpkin = Instance.new("TextButton")
+pumpkin.Size = UDim2.new(0, 60, 0, 60)
+pumpkin.Position = UDim2.new(1, -70, 0, 10)
+pumpkin.Text = "🎃"
+pumpkin.TextScaled = true
+pumpkin.BackgroundTransparency = 1
+pumpkin.Visible = false
+pumpkin.Parent = screenGui
+
+-- =======================
+-- SBK HUB
+-- =======================
+local hubFrame = Instance.new("Frame")
+hubFrame.Size = UDim2.new(0, 300, 0, 200)
+hubFrame.Position = UDim2.new(0.5, -150, 0.5, -100)
+hubFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
+hubFrame.BackgroundTransparency = 0.3
+hubFrame.Visible = false
+hubFrame.Parent = screenGui
+hubFrame.Active = true
+hubFrame.Draggable = true
+
+-- Fly Button
+local flyButton = Instance.new("TextButton")
+flyButton.Size = UDim2.new(0.8, 0, 0, 50)
+flyButton.Position = UDim2.new(0.1, 0, 0.1, 0)
+flyButton.Text = "Fly"
+flyButton.TextScaled = true
+flyButton.Font = Enum.Font.GothamBold
+flyButton.TextColor3 = Color3.fromRGB(0, 255, 255)
+flyButton.TextStrokeColor3 = Color3.fromRGB(0,0,0)
+flyButton.TextStrokeTransparency = 0
+flyButton.BackgroundColor3 = Color3.fromRGB(0, 0, 100)
+flyButton.BorderSizePixel = 0
+flyButton.Parent = hubFrame
+
+-- Speed TextBox
+local speedBox = Instance.new("TextBox")
+speedBox.Size = UDim2.new(0.8, 0, 0, 50)
+speedBox.Position = UDim2.new(0.1, 0, 0.5, 0)
+speedBox.Text = "50"
+speedBox.TextScaled = true
+speedBox.ClearTextOnFocus = false
+speedBox.Font = Enum.Font.GothamBold
+speedBox.TextColor3 = Color3.fromRGB(0, 255, 255)
+speedBox.TextStrokeColor3 = Color3.fromRGB(0,0,0)
+speedBox.TextStrokeTransparency = 0
+speedBox.BackgroundColor3 = Color3.fromRGB(0, 0, 100)
+speedBox.BorderSizePixel = 0
+speedBox.Parent = hubFrame
+
+-- =======================
+-- Função Fly
+-- =======================
+local function flyCharacter()
+    local char = player.Character
+    if not char or not char:FindFirstChild("HumanoidRootPart") then return end
+    local hrp = char.HumanoidRootPart
+
+    RunService.RenderStepped:Connect(function()
+        if flying then
+            local camCFrame = workspace.CurrentCamera.CFrame
+            hrp.Velocity = camCFrame.LookVector * flySpeed
+        end
+    end)
+end
+
+flyButton.MouseButton1Click:Connect(function()
+    flying = not flying
+    flyButton.Text = flying and "Stop Fly" or "Fly"
+    flySpeed = tonumber(speedBox.Text) or 50
+    if flying then
+        flyCharacter()
+    end
+end)
+
+-- =======================
+-- Key Check
+-- =======================
+submitButton.MouseButton1Click:Connect(function()
+    if textBox.Text == KEY_CORRETA then
+        textLabel.Text = "Key correta!"
+        loginFrame.Visible = false
+        pumpkin.Visible = true
+    else
+        textLabel.Text = "Key incorreta!"
+    end
+end)
+
+-- =======================
+-- Abrir HUB ao clicar no 🎃
+-- =======================
+pumpkin.MouseButton1Click:Connect(function()
+    hubFrame.Visible = true
+end)
