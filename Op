@@ -1,0 +1,160 @@
+-- LocalScript dentro de StarterPlayerScripts ou StarterGui
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local RunService = game:GetService("RunService")
+
+-- Variáveis
+local KEY_CORRETA = "SBK"
+local flying = false
+local flySpeed = 50
+
+-- GUI
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = player:WaitForChild("PlayerGui")
+
+-- =======================
+-- ESTILO GLOBAL (cores, fontes)
+-- =======================
+local TEXT_COLOR = Color3.fromRGB(30, 120, 255) -- azul neon
+local FRAME_COLOR = Color3.fromRGB(235, 235, 255) -- branco suave
+local FONT = Enum.Font.Arcade -- fonte estilo retrô (mais parecida com Mario)
+local OUTLINE_COLOR = Color3.fromRGB(0, 0, 0)
+
+-- =======================
+-- TELA DE LOGIN
+-- =======================
+local loginFrame = Instance.new("Frame")
+loginFrame.Size = UDim2.new(0, 400, 0, 200)
+loginFrame.Position = UDim2.new(0.5, -200, 0.5, -100)
+loginFrame.BackgroundColor3 = FRAME_COLOR
+loginFrame.BorderSizePixel = 0
+loginFrame.Parent = screenGui
+
+local textLabel = Instance.new("TextLabel")
+textLabel.Size = UDim2.new(1, -20, 0, 50)
+textLabel.Position = UDim2.new(0, 10, 0, 20)
+textLabel.BackgroundTransparency = 1
+textLabel.Text = "Digite a key:"
+textLabel.TextScaled = true
+textLabel.Font = FONT
+textLabel.TextColor3 = TEXT_COLOR
+textLabel.TextStrokeColor3 = OUTLINE_COLOR
+textLabel.TextStrokeTransparency = 0
+textLabel.Parent = loginFrame
+
+local textBox = Instance.new("TextBox")
+textBox.Size = UDim2.new(1, -20, 0, 50)
+textBox.Position = UDim2.new(0, 10, 0, 80)
+textBox.Text = ""
+textBox.TextScaled = true
+textBox.ClearTextOnFocus = false
+textBox.Font = FONT
+textBox.TextColor3 = TEXT_COLOR
+textBox.TextStrokeColor3 = OUTLINE_COLOR
+textBox.TextStrokeTransparency = 0
+textBox.BackgroundColor3 = Color3.fromRGB(220, 230, 255)
+textBox.BorderSizePixel = 0
+textBox.Parent = loginFrame
+
+local submitButton = Instance.new("TextButton")
+submitButton.Size = UDim2.new(0.5, -10, 0, 40)
+submitButton.Position = UDim2.new(0.25, 0, 0, 150)
+submitButton.Text = "Entrar"
+submitButton.TextScaled = true
+submitButton.Font = FONT
+submitButton.TextColor3 = TEXT_COLOR
+submitButton.TextStrokeColor3 = OUTLINE_COLOR
+submitButton.TextStrokeTransparency = 0
+submitButton.BackgroundColor3 = Color3.fromRGB(200, 220, 255)
+submitButton.BorderSizePixel = 0
+submitButton.Parent = loginFrame
+
+-- =======================
+-- EMOJI 🎃
+-- =======================
+local pumpkin = Instance.new("TextButton")
+pumpkin.Size = UDim2.new(0, 60, 0, 60)
+pumpkin.Position = UDim2.new(1, -70, 0, 10)
+pumpkin.Text = "🎃"
+pumpkin.TextScaled = true
+pumpkin.BackgroundTransparency = 1
+pumpkin.Visible = false
+pumpkin.Parent = screenGui
+
+-- =======================
+-- SBK HUB
+-- =======================
+local hubFrame = Instance.new("Frame")
+hubFrame.Size = UDim2.new(0, 320, 0, 220)
+hubFrame.Position = UDim2.new(0.5, -160, 0.5, -110)
+hubFrame.BackgroundColor3 = FRAME_COLOR
+hubFrame.BackgroundTransparency = 0.05
+hubFrame.Visible = false
+hubFrame.Parent = screenGui
+hubFrame.Active = true
+hubFrame.Draggable = true
+
+-- Título
+local hubTitle = Instance.new("TextLabel")
+hubTitle.Size = UDim2.new(1, -40, 0, 40)
+hubTitle.Position = UDim2.new(0, 20, 0, 10)
+hubTitle.BackgroundTransparency = 1
+hubTitle.Text = "SBK HUB"
+hubTitle.TextScaled = true
+hubTitle.Font = FONT
+hubTitle.TextColor3 = TEXT_COLOR
+hubTitle.TextStrokeColor3 = OUTLINE_COLOR
+hubTitle.TextStrokeTransparency = 0
+hubTitle.Parent = hubFrame
+
+-- Botão de fechar ❌
+local closeButton = Instance.new("TextButton")
+closeButton.Size = UDim2.new(0, 35, 0, 35)
+closeButton.Position = UDim2.new(1, -45, 0, 5)
+closeButton.Text = "X"
+closeButton.TextScaled = true
+closeButton.Font = FONT
+closeButton.BackgroundColor3 = Color3.fromRGB(255, 120, 120)
+closeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+closeButton.TextStrokeColor3 = OUTLINE_COLOR
+closeButton.TextStrokeTransparency = 0
+closeButton.BorderSizePixel = 0
+closeButton.Parent = hubFrame
+
+closeButton.MouseButton1Click:Connect(function()
+    hubFrame.Visible = false
+end)
+
+-- Fly Button
+local flyButton = Instance.new("TextButton")
+flyButton.Size = UDim2.new(0.8, 0, 0, 50)
+flyButton.Position = UDim2.new(0.1, 0, 0.28, 0)
+flyButton.Text = "Fly"
+flyButton.TextScaled = true
+flyButton.Font = FONT
+flyButton.TextColor3 = TEXT_COLOR
+flyButton.TextStrokeColor3 = OUTLINE_COLOR
+flyButton.TextStrokeTransparency = 0
+flyButton.BackgroundColor3 = Color3.fromRGB(200, 220, 255)
+flyButton.BorderSizePixel = 0
+flyButton.Parent = hubFrame
+
+-- Speed TextBox
+local speedBox = Instance.new("TextBox")
+speedBox.Size = UDim2.new(0.8, 0, 0, 50)
+speedBox.Position = UDim2.new(0.1, 0, 0.60, 0)
+speedBox.Text = "50"
+speedBox.TextScaled = true
+speedBox.ClearTextOnFocus = false
+speedBox.Font = FONT
+speedBox.TextColor3 = TEXT_COLOR
+speedBox.TextStrokeColor3 = OUTLINE_COLOR
+speedBox.TextStrokeTransparency = 0
+speedBox.BackgroundColor3 = Color3.fromRGB(200, 220, 255)
+speedBox.BorderSizePixel = 0
+speedBox.Parent = hubFrame
+
+-- =======================
+-- Função Fly
+-- =======
