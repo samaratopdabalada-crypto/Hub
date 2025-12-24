@@ -1,0 +1,197 @@
+if not game:IsLoaded() then game.Loaded:Wait() end
+
+-- SERVICES
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local player = Players.LocalPlayer
+
+-- CONTROLE DA KEY (IMPORTANTE)
+local liberado = false
+
+-- GUI BASE
+local gui = Instance.new("ScreenGui")
+gui.Name = "PipocaHubGUI"
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
+
+-- 🍿 BOTÃO FLUTUANTE
+local openBtn = Instance.new("TextButton", gui)
+openBtn.Size = UDim2.new(0, 60, 0, 60)
+openBtn.Position = UDim2.new(0, 14, 0, 14)
+openBtn.BackgroundColor3 = Color3.fromRGB(10,10,10)
+openBtn.Text = ""
+openBtn.AutoButtonColor = false
+Instance.new("UICorner", openBtn).CornerRadius = UDim.new(1,0)
+
+local emoji = Instance.new("TextLabel", openBtn)
+emoji.Size = UDim2.new(1,0,1,0)
+emoji.BackgroundTransparency = 1
+emoji.Text = "🍿"
+emoji.TextScaled = true
+
+local hubName = Instance.new("TextLabel", gui)
+hubName.Size = UDim2.new(0, 90, 0, 18)
+hubName.Position = UDim2.new(0, 8, 0, 80)
+hubName.BackgroundTransparency = 1
+hubName.Text = "PIPOCA HUB"
+hubName.Font = Enum.Font.Arcade
+hubName.TextSize = 12
+hubName.TextColor3 = Color3.new(1,1,1)
+
+-- 🔐 KEY SYSTEM
+local keyFrame = Instance.new("Frame", gui)
+keyFrame.Size = UDim2.new(0, 320, 0, 230)
+keyFrame.Position = UDim2.new(0.5,0,0.5,0)
+keyFrame.AnchorPoint = Vector2.new(0.5,0.5)
+keyFrame.BackgroundColor3 = Color3.fromRGB(18,18,18)
+keyFrame.Visible = false
+Instance.new("UICorner", keyFrame).CornerRadius = UDim.new(0,16)
+
+local keyTitle = Instance.new("TextLabel", keyFrame)
+keyTitle.Size = UDim2.new(1,0,0,40)
+keyTitle.BackgroundTransparency = 1
+keyTitle.Text = "KEY SYSTEM"
+keyTitle.Font = Enum.Font.Arcade
+keyTitle.TextSize = 18
+keyTitle.TextColor3 = Color3.new(1,1,1)
+
+local keyBox = Instance.new("TextBox", keyFrame)
+keyBox.Size = UDim2.new(0.85,0,0,36)
+keyBox.Position = UDim2.new(0.075,0,0.35,0)
+keyBox.PlaceholderText = "Digite a Key"
+keyBox.Text = ""
+keyBox.Font = Enum.Font.Arcade
+keyBox.TextSize = 14
+keyBox.BackgroundColor3 = Color3.fromRGB(35,35,35)
+keyBox.TextColor3 = Color3.new(1,1,1)
+Instance.new("UICorner", keyBox).CornerRadius = UDim.new(0,10)
+
+local discordBtn = Instance.new("TextButton", keyFrame)
+discordBtn.Size = UDim2.new(0.85,0,0,36)
+discordBtn.Position = UDim2.new(0.075,0,0.55,0)
+discordBtn.Text = "KEY DISCORD"
+discordBtn.Font = Enum.Font.Arcade
+discordBtn.TextSize = 14
+discordBtn.BackgroundColor3 = Color3.fromRGB(0,90,255)
+discordBtn.TextColor3 = Color3.new(1,1,1)
+Instance.new("UICorner", discordBtn).CornerRadius = UDim.new(0,10)
+
+local enterBtn = Instance.new("TextButton", keyFrame)
+enterBtn.Size = UDim2.new(0.85,0,0,36)
+enterBtn.Position = UDim2.new(0.075,0,0.75,0)
+enterBtn.Text = "ENTRAR"
+enterBtn.Font = Enum.Font.Arcade
+enterBtn.TextSize = 14
+enterBtn.BackgroundColor3 = Color3.fromRGB(60,60,60)
+enterBtn.TextColor3 = Color3.new(1,1,1)
+Instance.new("UICorner", enterBtn).CornerRadius = UDim.new(0,10)
+
+-- 🚀 HUB
+local hub = Instance.new("Frame", gui)
+hub.Size = UDim2.new(0, 340, 0, 260)
+hub.Position = UDim2.new(0.5,0,0.5,0)
+hub.AnchorPoint = Vector2.new(0.5,0.5)
+hub.BackgroundColor3 = Color3.fromRGB(18,18,18)
+hub.Visible = false
+Instance.new("UICorner", hub).CornerRadius = UDim.new(0,16)
+
+local hubTitle = Instance.new("TextLabel", hub)
+hubTitle.Size = UDim2.new(1,0,0,40)
+hubTitle.BackgroundTransparency = 1
+hubTitle.Text = "PIPOCA HUB AUTO BUY ☠️"
+hubTitle.Font = Enum.Font.Arcade
+hubTitle.TextSize = 16
+hubTitle.TextColor3 = Color3.new(1,1,1)
+
+local function makeBtn(text,y)
+ local b = Instance.new("TextButton", hub)
+ b.Size = UDim2.new(0.85,0,0,40)
+ b.Position = UDim2.new(0.075,0,y,0)
+ b.Text = text
+ b.Font = Enum.Font.Arcade
+ b.TextSize = 14
+ b.BackgroundColor3 = Color3.fromRGB(45,45,45)
+ b.TextColor3 = Color3.new(1,1,1)
+ Instance.new("UICorner", b).CornerRadius = UDim.new(0,12)
+ return b
+end
+
+local autoBtn = makeBtn("ATIVAR AUTO BUY", 0.35)
+local anchorBtn = makeBtn("ATIVAR ÂNCORA", 0.55)
+
+local footer = Instance.new("TextLabel", hub)
+footer.Size = UDim2.new(1,0,0,22)
+footer.Position = UDim2.new(0,0,1,-22)
+footer.BackgroundTransparency = 1
+footer.Text = "TTK:pipocahub"
+footer.Font = Enum.Font.Arcade
+footer.TextSize = 13
+
+-- 🍿 BOTÃO ABRIR (KEY SÓ 1 VEZ)
+openBtn.MouseButton1Click:Connect(function()
+ if liberado then
+  hub.Visible = not hub.Visible
+ else
+  keyFrame.Visible = true
+ end
+end)
+
+-- DISCORD
+discordBtn.MouseButton1Click:Connect(function()
+ setclipboard("https://discord.gg/sf9TdCQV6")
+end)
+
+-- ENTRAR (KEY)
+enterBtn.MouseButton1Click:Connect(function()
+ if keyBox.Text == "PipocaTheKing" then
+  liberado = true
+  keyFrame.Visible = false
+  hub.Visible = true
+ end
+end)
+
+-- 🌈 RAINBOW FOOTER
+local h = 0
+RunService.RenderStepped:Connect(function(dt)
+ h = (h + dt*0.3) % 1
+ footer.TextColor3 = Color3.fromHSV(h,1,1)
+end)
+
+-- 🤖 AUTO BUY (PromptAttachment)
+local auto = false
+task.spawn(function()
+ while true do
+  if auto then
+   for _,v in ipairs(workspace:GetDescendants()) do
+    if v:IsA("Attachment") and v.Name == "PromptAttachment" then
+     local p = v:FindFirstChildOfClass("ProximityPrompt")
+     if p and p.Enabled then
+      pcall(function()
+       fireproximityprompt(p)
+      end)
+     end
+    end
+   end
+  end
+  task.wait(0.4)
+ end
+end)
+
+autoBtn.MouseButton1Click:Connect(function()
+ auto = not auto
+ autoBtn.Text = auto and "DESATIVAR AUTO BUY" or "ATIVAR AUTO BUY"
+end)
+
+-- ⚓ ÂNCORA (SEM BUG)
+local anchored = false
+anchorBtn.MouseButton1Click:Connect(function()
+ local char = player.Character
+ if not char then return end
+ local hrp = char:FindFirstChild("HumanoidRootPart")
+ local hum = char:FindFirstChildOfClass("Humanoid")
+ if not hrp or not hum then return end
+ anchored = not anchored
+ hrp.Anchored = anchored
+ hum.AutoRotate = not anchored
+ anchorBtn.Text = anchored and "DESATIVAR ÂNCORA" or "ATIVAR ÂNCORA"
+end)
