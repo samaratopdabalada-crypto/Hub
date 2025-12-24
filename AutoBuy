@@ -1,0 +1,178 @@
+--========================
+-- 🔑 KEY SYSTEM
+--========================
+local P=game:GetService("Players").LocalPlayer
+local G=Instance.new("ScreenGui",P:WaitForChild("PlayerGui"))
+G.ResetOnSpawn=false
+
+local F=Instance.new("Frame",G)
+F.Size=UDim2.new(0,300,0,200)
+F.Position=UDim2.new(0.5,0,0.5,0)
+F.AnchorPoint=Vector2.new(0.5,0.5)
+F.BackgroundColor3=Color3.fromRGB(20,20,20)
+Instance.new("UICorner",F).CornerRadius=UDim.new(0,16)
+
+local T=Instance.new("TextLabel",F)
+T.Size=UDim2.new(1,0,0,40)
+T.BackgroundTransparency=1
+T.Text="KEY SYSTEM"
+T.Font=Enum.Font.GothamBlack
+T.TextSize=20
+T.TextColor3=Color3.new(1,1,1)
+
+local Box=Instance.new("TextBox",F)
+Box.Size=UDim2.new(0.9,0,0,36)
+Box.Position=UDim2.new(0.05,0,0.35,0)
+Box.PlaceholderText="Digite a KEY"
+Box.Text=""
+Box.BackgroundColor3=Color3.fromRGB(35,35,35)
+Box.TextColor3=Color3.new(1,1,1)
+Instance.new("UICorner",Box).CornerRadius=UDim.new(0,12)
+
+local Copy=Instance.new("TextButton",F)
+Copy.Size=UDim2.new(0.9,0,0,36)
+Copy.Position=UDim2.new(0.05,0,0.6,0)
+Copy.Text="KEY DISCORD"
+Copy.BackgroundColor3=Color3.fromRGB(0,85,255)
+Copy.TextColor3=Color3.new(1,1,1)
+Instance.new("UICorner",Copy).CornerRadius=UDim.new(0,12)
+
+local Enter=Instance.new("TextButton",F)
+Enter.Size=UDim2.new(0.9,0,0,36)
+Enter.Position=UDim2.new(0.05,0,0.8,0)
+Enter.Text="ENTRAR"
+Enter.BackgroundColor3=Color3.fromRGB(60,60,60)
+Enter.TextColor3=Color3.new(1,1,1)
+Instance.new("UICorner",Enter).CornerRadius=UDim.new(0,12)
+
+Copy.MouseButton1Click:Connect(function()
+ setclipboard("https://discord.gg/sf9TdCQV6")
+end)
+
+local KEY="PipocaTheKing"
+
+Enter.MouseButton1Click:Connect(function()
+ if Box.Text~=KEY then return end
+ F:Destroy()
+
+ --========================
+ -- 🍿 HUB OBFUSCADO
+ --========================
+ local _0x1={[0]="Players",[1]="RunService",[2]="LocalPlayer",[3]="PlayerGui",[4]="ScreenGui",[5]="TextButton",[6]="TextLabel",[7]="Frame",[8]="UICorner",[9]="Attachment",[10]="PromptAttachment",[11]="ProximityPrompt",[12]="HumanoidRootPart",[13]="Humanoid",[14]="RenderStepped"}
+ local _0x2=function(a)return game:GetService(_0x1[a])end
+ local _0x3=_0x2(0)[_0x1[2]]
+ local _0x4=Instance.new(_0x1[4],_0x3[_0x1[3]])
+ _0x4.ResetOnSpawn=false
+
+ local _0x5=Instance.new(_0x1[5],_0x4)
+ _0x5.Size=UDim2.new(0,65,0,65)
+ _0x5.Position=UDim2.new(0,14,0,14)
+ _0x5.BackgroundColor3=Color3.fromRGB(10,10,10)
+ _0x5.Text=""
+ Instance.new(_0x1[8],_0x5).CornerRadius=UDim.new(1,0)
+
+ local _0x6=Instance.new(_0x1[6],_0x5)
+ _0x6.Size=UDim2.new(1,0,0.6,0)
+ _0x6.BackgroundTransparency=1
+ _0x6.Text="🍿"
+ _0x6.TextScaled=true
+
+ local _0x7=Instance.new(_0x1[6],_0x5)
+ _0x7.Size=UDim2.new(1,0,0.35,0)
+ _0x7.Position=UDim2.new(0,0,0.6,0)
+ _0x7.BackgroundTransparency=1
+ _0x7.Text="PIPOCA HUB"
+ _0x7.TextColor3=Color3.new(1,1,1) -- 👈 BRANCO
+
+ local _0x8=Instance.new(_0x1[7],_0x4)
+ _0x8.Size=UDim2.new(0,320,0,260)
+ _0x8.Position=UDim2.new(0.5,0,0.5,0)
+ _0x8.AnchorPoint=Vector2.new(0.5,0.5)
+ _0x8.BackgroundColor3=Color3.fromRGB(18,18,18)
+ _0x8.Visible=false
+ Instance.new(_0x1[8],_0x8).CornerRadius=UDim.new(0,16)
+
+ local _0x9=Instance.new(_0x1[6],_0x8)
+ _0x9.Size=UDim2.new(1,-20,0,40)
+ _0x9.Position=UDim2.new(0.5,0,0.08,0)
+ _0x9.AnchorPoint=Vector2.new(0.5,0)
+ _0x9.BackgroundTransparency=1
+ _0x9.Text="PIPOCA HUB AUTO BUY ☠️"
+ _0x9.TextSize=18
+ _0x9.TextColor3=Color3.new(1,1,1)
+
+ local function B(t,y)
+  local b=Instance.new(_0x1[5],_0x8)
+  b.Size=UDim2.new(0.9,0,0,42)
+  b.Position=UDim2.new(0.05,0,y,0)
+  b.Text=t
+  b.BackgroundColor3=Color3.fromRGB(40,40,40)
+  b.TextColor3=Color3.new(1,1,1)
+  Instance.new(_0x1[8],b).CornerRadius=UDim.new(0,12)
+  return b
+ end
+
+ local A=B("ATIVAR AUTO BUY",0.35)
+ local C=B("ATIVAR ÂNCORA",0.55)
+
+ local D=Instance.new(_0x1[6],_0x8)
+ D.Size=UDim2.new(1,0,0,26)
+ D.Position=UDim2.new(0,0,1,-26)
+ D.BackgroundTransparency=1
+ D.Text="TTK:pipocahub"
+ D.TextStrokeTransparency=0
+
+ _0x5.MouseButton1Click:Connect(function()
+  _0x8.Visible=not _0x8.Visible
+ end)
+
+ local E=false
+ task.spawn(function()
+  while true do
+   if E then
+    for _,v in ipairs(workspace:GetDescendants()) do
+     if v:IsA(_0x1[9]) and v.Name==_0x1[10] then
+      local p=v:FindFirstChildOfClass(_0x1[11])
+      if p and p.Enabled then pcall(function()fireproximityprompt(p)end) end
+     end
+    end
+   end
+   task.wait(0.4)
+  end
+ end)
+
+ A.MouseButton1Click:Connect(function()
+  E=not E
+  A.Text=E and "DESATIVAR AUTO BUY" or "ATIVAR AUTO BUY"
+ end)
+
+ local F=false
+ local G=true
+ local function H()
+  return _0x3.Character or _0x3.CharacterAdded:Wait()
+ end
+
+ C.MouseButton1Click:Connect(function()
+  F=not F
+  local c=H()
+  local r=c:FindFirstChild(_0x1[12])
+  local h=c:FindFirstChildOfClass(_0x1[13])
+  if r and h then
+   if F then
+    G=h.AutoRotate
+    h.AutoRotate=false
+    r.Anchored=true
+   else
+    r.Anchored=false
+    h.AutoRotate=G
+   end
+  end
+  C.Text=F and "DESATIVAR ÂNCORA" or "ATIVAR ÂNCORA"
+ end)
+
+ local I=0
+ _0x2(1)[_0x1[14]]:Connect(function(dt)
+  I=(I+dt*0.25)%1
+  D.TextColor3=Color3.fromHSV(I,1,1)
+ end)
+end)
