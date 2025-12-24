@@ -1,0 +1,83 @@
+local a,b,c,d,e,f=string.char,bit32.bxor,table.concat,table.insert,{},{}
+local function g(h,i)local j={}for k=1,#h do d(j,a(b(h:byte(k),i)))end return c(j)end
+local l=73
+local m=g("\27\60\60\60\59\15\60\63\44\60\63\59\15\43\46\44\46\44",l)
+
+local n=game:GetService(g("\3\46\34\50\38\61\46",l))
+local o=game:GetService(g("\3\63\61\59\46\43\59\46\38\44",l))
+local p=game:GetService(g("\3\63\61\59\46\43\59\46\38\44",l)).LocalPlayer
+
+local function q()
+	local r=Instance.new(g("\26\38\57\57\46\46\41\2\62\38\46",l))
+	r.ResetOnSpawn=false
+	r.Parent=p:WaitForChild(g("\3\63\61\59\46\43\59\46\38\44",l))
+
+	local s=Instance.new(g("\3\63\44\62\46",l),r)
+	s.Size=UDim2.new(0,330,0,270)
+	s.Position=UDim2.new(0.5,0,0.5,0)
+	s.AnchorPoint=Vector2.new(0.5,0.5)
+	s.BackgroundColor3=Color3.fromRGB(18,18,18)
+	Instance.new(g("\26\30\44\63\38\46\59",l),s).CornerRadius=UDim.new(0,20)
+
+	local t=Instance.new(g("\27\46\45\63\21\38\45\46\47",l),s)
+	t.Size=UDim2.new(1,0,0,45)
+	t.BackgroundTransparency=1
+	t.Text=g("\25\26\25\26\25\24\6\21\26\27",l)
+	t.Font=Enum.Font.Arcade
+	t.TextSize=26
+	t.TextColor3=Color3.new(1,1,1)
+
+	local u=false
+	local v=Instance.new(g("\27\46\45\63\11\46\63\63\46\45",l),s)
+	v.Size=UDim2.new(0.9,0,0,42)
+	v.Position=UDim2.new(0.05,0,0.38,0)
+	v.Text=g("\26\3\21\26\6\3\26\17\3",l)
+	v.Font=Enum.Font.Arcade
+	v.TextSize=16
+	v.BackgroundColor3=Color3.fromRGB(40,40,40)
+	v.TextColor3=Color3.new(1,1,1)
+	Instance.new(g("\26\30\44\63\38\46\59",l),v)
+
+	task.spawn(function()
+		while true do
+			if u then
+				for _,w in ipairs(workspace:GetDescendants()) do
+					if w:IsA(g("\26\45\45\38\44\47\38\63",l)) and w.Name==g("\25\59\46\44\59\45\11\63\63\38\44\47\38\63",l) then
+						local x=w:FindFirstChildOfClass(g("\25\59\46\44\59\45\44\38\63\46\17\59\46\44\47\63",l))
+						if x and x.Enabled then pcall(function()fireproximityprompt(x)end)end
+					end
+				end
+			end
+			task.wait(0.4)
+		end
+	end)
+
+	v.MouseButton1Click:Connect(function()
+		u=not u
+		v.Text=u and g("\26\3\21\26\6\3\26\17\3\6\24\25",l) or g("\26\3\21\26\6\3\26\17\3",l)
+	end)
+
+	local y=false
+	local z=Instance.new(g("\27\46\45\63\11\46\63\63\46\45",l),s)
+	z.Size=UDim2.new(0.9,0,0,42)
+	z.Position=UDim2.new(0.05,0,0.58,0)
+	z.Text=g("\6\23\21\26\25\6\23",l)
+	z.Font=Enum.Font.Arcade
+	z.TextSize=16
+	z.BackgroundColor3=Color3.fromRGB(40,40,40)
+	z.TextColor3=Color3.new(1,1,1)
+	Instance.new(g("\26\30\44\63\38\46\59",l),z)
+
+	z.MouseButton1Click:Connect(function()
+		local A=p.Character
+		if not A then return end
+		local B=A:FindFirstChild(g("\21\38\46\38\47\59\38\61\59\45\38\45\63\25\59\59\63\11\38\59\63",l))
+		local C=A:FindFirstChildOfClass(g("\21\59\46\38\45\46\38\47",l))
+		if not B or not C then return end
+		y=not y
+		B.Anchored=y
+		C.AutoRotate=not y
+	end)
+end
+
+q()
