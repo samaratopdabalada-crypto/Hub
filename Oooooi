@@ -1,0 +1,134 @@
+-- SLENDERYIELD
+-- Mini command executor
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local LP = Players.LocalPlayer
+
+-- GUI
+local gui = Instance.new("ScreenGui")
+gui.Name = "SlenderYield"
+gui.Parent = game.CoreGui
+
+local frame = Instance.new("Frame", gui)
+frame.Size = UDim2.new(0, 260, 0, 120)
+frame.Position = UDim2.new(1, -270, 0.35, 0) -- canto direito →
+frame.BackgroundColor3 = Color3.fromRGB(25,25,25)
+frame.Active = true
+frame.Draggable = true
+Instance.new("UICorner", frame)
+
+-- TÍTULO
+local title = Instance.new("TextLabel", frame)
+title.Size = UDim2.new(1,0,0,30)
+title.BackgroundTransparency = 1
+title.Text = "SlenderYield"
+title.TextColor3 = Color3.fromRGB(255,255,255)
+title.TextScaled = true
+
+-- CAIXA DE TEXTO
+local box = Instance.new("TextBox", frame)
+box.Size = UDim2.new(1,-20,0,35)
+box.Position = UDim2.new(0,10,0,40)
+box.PlaceholderText = "Digite um comando"
+box.Text = ""
+box.BackgroundColor3 = Color3.fromRGB(35,35,35)
+box.TextColor3 = Color3.new(1,1,1)
+box.ClearTextOnFocus = false
+Instance.new("UICorner", box)
+
+-- STATUS
+local status = Instance.new("TextLabel", frame)
+status.Size = UDim2.new(1,-20,0,20)
+status.Position = UDim2.new(0,10,0,80)
+status.BackgroundTransparency = 1
+status.Text = ""
+status.TextColor3 = Color3.fromRGB(0,255,0)
+status.TextScaled = true
+
+-- 🔎 PEGAR PLAYER POR NOME OU APELIDO
+local function getPlayerByName(txt)
+	txt = txt:lower()
+	for _,plr in pairs(Players:GetPlayers()) do
+		if plr.Name:lower():sub(1,#txt) == txt
+		or (plr.DisplayName and plr.DisplayName:lower():sub(1,#txt) == txt) then
+			return plr
+		end
+	end
+end
+
+-- 💥 FLING REAL SIMPLES
+local function flingPlayer(target)
+	local char = LP.Character
+	local tchar = target.Character
+	if not char or not tchar then return end
+
+	local hrp = char:FindFirstChild("HumanoidRootPart")
+	local thrp = tchar:FindFirstChild("HumanoidRootPart")
+	if not hrp or not thrp then return end
+
+	local bav = Instance.new("BodyAngularVelocity", hrp)
+	bav.AngularVelocity = Vector3.new(0,80,0)
+	bav.MaxTorque = Vector3.new(math.huge,math.huge,math.huge)
+
+	for i = 1,150 do
+		hrp.CFrame = thrp.CFrame
+		hrp.AssemblyLinearVelocity = Vector3.new(
+			math.random(-3000,3000),
+			3000,
+			math.random(-3000,3000)
+		)
+		RunService.Heartbeat:Wait()
+	end
+
+	bav:Destroy()
+end
+
+-- 📥 EXECUTAR COMANDO
+local function runCommand(text)
+	local args = string.split(text," ")
+	local cmd = args[1] and args[1]:lower()
+
+	-- FLING
+	if cmd == "fling" and args[2] then
+		local target = getPlayerByName(args[2])
+		if target then
+			status.Text = "Fling em "..target.Name
+			flingPlayer(target)
+		else
+			status.Text = "Jogador não encontrado"
+		end
+
+	-- FLY V3
+	elseif cmd == "fly" and args[2] == "v3" then
+		status.Text = "Fly v3 carregado"
+		loadstring(game:HttpGet(
+			"https://rawscripts.net/raw/Universal-Script-Fly-v3-64434"
+		))()
+
+	-- OVERDRIVE
+	elseif cmd == "overdrive" then
+		status.Text = "Overdrive carregado"
+		loadstring(game:HttpGet(
+			"https://api.overdrivehub.xyz/v1/auth"
+		))()
+
+	-- LEMON HUB
+	elseif cmd == "lemon" then
+		status.Text = "Lemon Hub carregado"
+		loadstring(game:HttpGet(
+			"https://api.luarmor.net/files/v3/loaders/6d08fbf253529a4fefa32ff404bd5448.lua"
+		))()
+
+	else
+		status.Text = "Comando inválido"
+	end
+end
+
+-- ENTER PARA EXECUTAR
+box.FocusLost:Connect(function(enter)
+	if enter then
+		runCommand(box.Text)
+		box.Text = ""
+	end
+end)
