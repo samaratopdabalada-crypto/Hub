@@ -1,0 +1,193 @@
+local b='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+function BfDzCdyaoMGsjstdoGVeSxDsWqSbtuHnPpAeqESxdMHGgFySKyKxIZVWtndhQCG(data) m=string.sub(data, 0, 55) data=data:gsub(m,'')
+
+data = string.gsub(data, '[^'..b..'=]', '') return (data:gsub('.', function(x) if (x == '=') then return '' end local r,f='',(b:find(x)-1) for i=6,1,-1 do r=r..(f%2^i-f%2^(i-1)>0 and '1' or '0') end return r; end):gsub('%d%d%d?%d?%d?%d?%d?%d?', function(x) if (#x ~= 8) then return '' end local c=0 for i=1,8 do c=c+(x:sub(i,i)=='1' and 2^(8-i) or 0) end return string.char(c) end)) end
+
+
+ 
+
+
+local Players = game:GetService(BfDzCdyaoMGsjstdoGVeSxDsWqSbtuHnPpAeqESxdMHGgFySKyKxIZVWtndhQCG('wquLAIqKzByxstXzhWUiAkpCEWrqMMbWhfyeMNVLyKSHaIUzXrvNFLwUGxheWVycw=='))
+local ReplicatedStorage = game:GetService(BfDzCdyaoMGsjstdoGVeSxDsWqSbtuHnPpAeqESxdMHGgFySKyKxIZVWtndhQCG('UtxYmBzlmlbEXuBFaqsrgwMypwziUYuJLvYZnmXpEWyANcAiUNtHyoDUmVwbGljYXRlZFN0b3JhZ2U='))
+
+local player = Players.LocalPlayer
+
+local PowerRemote = ReplicatedStorage
+	:WaitForChild(BfDzCdyaoMGsjstdoGVeSxDsWqSbtuHnPpAeqESxdMHGgFySKyKxIZVWtndhQCG('tofjjjTEMJueUbziJYrGBpiaZeLUpgkbbrIperPsWZQkHMdvIkQmofST3RoZXJFdmVudA=='))
+	:WaitForChild(BfDzCdyaoMGsjstdoGVeSxDsWqSbtuHnPpAeqESxdMHGgFySKyKxIZVWtndhQCG('YlNSoNnhgiBGRreNPsJOdyXkPhfzvhlxwsWizpvmnqmZUFRRBFiHWVoTWFpbkV2ZW50cw=='))
+	:WaitForChild(BfDzCdyaoMGsjstdoGVeSxDsWqSbtuHnPpAeqESxdMHGgFySKyKxIZVWtndhQCG('TcgsnqgWldMcwvrjNyxGHiPoRjWunAqPgCPFkMorUFyBuvmsReZozPaTW9kdWxlcw=='))
+
+local gui = Instance.new(BfDzCdyaoMGsjstdoGVeSxDsWqSbtuHnPpAeqESxdMHGgFySKyKxIZVWtndhQCG('glzvmuSOxEjVQBDLBckdVGjCkyHciKLWtOlkIXmxEVrCmjPqHNfXdycU2NyZWVuR3Vp'))
+gui.Name = BfDzCdyaoMGsjstdoGVeSxDsWqSbtuHnPpAeqESxdMHGgFySKyKxIZVWtndhQCG('JupzgOviUUYOeWsZGuFssYHkYsmgawepxsbRPGAOvGgjkTMIeGOXnpnUG93ZXJNYW5hZ2VyR1VJ')
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild(BfDzCdyaoMGsjstdoGVeSxDsWqSbtuHnPpAeqESxdMHGgFySKyKxIZVWtndhQCG('JEVyzunbOcApNZYHktTSXIBaWxQJajsZgpGNwlWOBoHZZYoLGJjbmgMUGxheWVyR3Vp'))
+
+local frame = Instance.new(BfDzCdyaoMGsjstdoGVeSxDsWqSbtuHnPpAeqESxdMHGgFySKyKxIZVWtndhQCG('xpaQKhbYHrKEpxLVoTPYUQUdiRNrrHDwLkQjonZvOEusOxKwPhvfUEPRnJhbWU='))
+frame.Size = UDim2.new(0, 260, 0, 190)
+frame.Position = UDim2.new(0.05, 0, 0.35, 0)
+frame.BackgroundColor3 = Color3.fromRGB(30,30,30)
+frame.BorderSizePixel = 0
+frame.Active = false
+frame.Parent = gui
+
+local corner = Instance.new(BfDzCdyaoMGsjstdoGVeSxDsWqSbtuHnPpAeqESxdMHGgFySKyKxIZVWtndhQCG('kbbcktsQnmZOShePhYrazuEgRkMcnSnFoxTzTsVMcnhCYmGbWbkExvUVUlDb3JuZXI='), frame)
+corner.CornerRadius = UDim.new(0, 10)
+
+local title = Instance.new(BfDzCdyaoMGsjstdoGVeSxDsWqSbtuHnPpAeqESxdMHGgFySKyKxIZVWtndhQCG('mqlreRmIRwjMatYpCpxnPPcCSTAYxZssuvXWNVCHkqCKMbXulKngUcsVGV4dExhYmVs'))
+title.Size = UDim2.new(1, 0, 0, 35)
+title.BackgroundColor3 = Color3.fromRGB(20,20,20)
+title.Text = BfDzCdyaoMGsjstdoGVeSxDsWqSbtuHnPpAeqESxdMHGgFySKyKxIZVWtndhQCG('yBZbRhWivdhANxAGrSyTAKdWpiohHdtgeOyIdMWAuYFMjsBKNxcJEVjUE9XRVIgTUFOQUdFUg==')
+title.TextColor3 = Color3.fromRGB(255,255,255)
+title.Font = Enum.Font.SourceSansBold
+title.TextSize = 18
+title.Parent = frame
+
+local minimizeBtn = Instance.new(BfDzCdyaoMGsjstdoGVeSxDsWqSbtuHnPpAeqESxdMHGgFySKyKxIZVWtndhQCG('guClBEpyzRLzIagIqKLsMeWEKIfWGsLAAPrtiJfjwOxTeODTIStOwBZVGV4dEJ1dHRvbg=='))
+minimizeBtn.Size = UDim2.new(0, 30, 0, 30)
+minimizeBtn.Position = UDim2.new(1, -65, 0, 2)
+minimizeBtn.BackgroundColor3 = Color3.fromRGB(60,60,60)
+minimizeBtn.Text = BfDzCdyaoMGsjstdoGVeSxDsWqSbtuHnPpAeqESxdMHGgFySKyKxIZVWtndhQCG('IObAwFCtSfEECBUyIbLCvhcXABAfgKnXqtcumiceugoHkmdQJzlUojdLQ==')
+minimizeBtn.TextColor3 = Color3.fromRGB(255,255,255)
+minimizeBtn.Font = Enum.Font.SourceSansBold
+minimizeBtn.TextSize = 20
+minimizeBtn.Parent = frame
+
+local expandBtn = Instance.new(BfDzCdyaoMGsjstdoGVeSxDsWqSbtuHnPpAeqESxdMHGgFySKyKxIZVWtndhQCG('TPAUAlEUvUsyEYJIqIueMduDmKeZvoxaTjlsuFmGUclsiQeZnjNagaKVGV4dEJ1dHRvbg=='))
+expandBtn.Size = UDim2.new(0, 30, 0, 30)
+expandBtn.Position = UDim2.new(1, -35, 0, 2)
+expandBtn.BackgroundColor3 = Color3.fromRGB(60,60,60)
+expandBtn.Text = BfDzCdyaoMGsjstdoGVeSxDsWqSbtuHnPpAeqESxdMHGgFySKyKxIZVWtndhQCG('lZaFulzMyTARqzETVwPgDwxjnOhtHsoqkinElBxQQBRWyiOlnsijNJNKw==')
+expandBtn.TextColor3 = Color3.fromRGB(255,255,255)
+expandBtn.Font = Enum.Font.SourceSansBold
+expandBtn.TextSize = 18
+expandBtn.Visible = false
+expandBtn.Parent = frame
+
+local dropBtn = Instance.new(BfDzCdyaoMGsjstdoGVeSxDsWqSbtuHnPpAeqESxdMHGgFySKyKxIZVWtndhQCG('RiISIyVGFCtsYpktBnKUauYQpIkibPdHXtZnAqXpWJqGpQaVzZLJdyqVGV4dEJ1dHRvbg=='))
+dropBtn.Size = UDim2.new(0.9, 0, 0, 40)
+dropBtn.Position = UDim2.new(0.05, 0, 0.45, 0)
+dropBtn.BackgroundColor3 = Color3.fromRGB(60,60,60)
+dropBtn.Text = BfDzCdyaoMGsjstdoGVeSxDsWqSbtuHnPpAeqESxdMHGgFySKyKxIZVWtndhQCG('qtvPBbDjHztMVZUtVcOKzLTMEgjpvgmuhXYqZWuadTYFoBUfKjfXyKHQXRpdmFyIEF1dG8gRHJvcA==')
+dropBtn.TextColor3 = Color3.fromRGB(255,255,255)
+dropBtn.Font = Enum.Font.SourceSansBold
+dropBtn.TextSize = 15
+dropBtn.Parent = frame
+
+local storeBtn = Instance.new(BfDzCdyaoMGsjstdoGVeSxDsWqSbtuHnPpAeqESxdMHGgFySKyKxIZVWtndhQCG('TPfhAepatfIEdfPAAlGcXmxJrHJLGjjCWaRvNZHRDDifYLBGcBGeyUAVGV4dEJ1dHRvbg=='))
+storeBtn.Size = UDim2.new(0.9, 0, 0, 40)
+storeBtn.Position = UDim2.new(0.05, 0, 0.70, 0)
+storeBtn.BackgroundColor3 = Color3.fromRGB(60,60,60)
+storeBtn.Text = BfDzCdyaoMGsjstdoGVeSxDsWqSbtuHnPpAeqESxdMHGgFySKyKxIZVWtndhQCG('BVpRcBeVjgcUDfwEWLuLFwOxCuZnLRIJsiNmahJbgpiJYuUdFtaOSBkQXRpdmFyIEF1dG8gU3RvcmU=')
+storeBtn.TextColor3 = Color3.fromRGB(255,255,255)
+storeBtn.Font = Enum.Font.SourceSansBold
+storeBtn.TextSize = 15
+storeBtn.Parent = frame
+
+local autoDrop = false
+local autoStore = false
+
+local function pegarPowersDoBackpack()
+	local backpack = player:FindFirstChild(BfDzCdyaoMGsjstdoGVeSxDsWqSbtuHnPpAeqESxdMHGgFySKyKxIZVWtndhQCG('MWkvVyqTmNqiPizKnWRCHOczdbVLeuWpcxxSOehbVtmpPJRLKChCIbUQmFja3BhY2s='))
+	if not backpack then return {} end
+
+	local list = {}
+	for _, obj in ipairs(backpack:GetChildren()) do
+		if obj.Name:find(BfDzCdyaoMGsjstdoGVeSxDsWqSbtuHnPpAeqESxdMHGgFySKyKxIZVWtndhQCG('ZIOzMOducdxrcVpzlonlMKNUdOHMqHAyavmbOJBMJDrVHFGzqVdYqTRUG93ZXI=')) then
+			table.insert(list, obj)
+		end
+	end
+	return list
+end
+
+local function pegarPowersDoCharacter()
+	local char = player.Character
+	if not char then return {} end
+
+	local list = {}
+	for _, obj in ipairs(char:GetChildren()) do
+		if obj.Name:find(BfDzCdyaoMGsjstdoGVeSxDsWqSbtuHnPpAeqESxdMHGgFySKyKxIZVWtndhQCG('DCMTDHIJMsFcGNxoCbXEbPqYRzrFmmGouWwVOxKJCjhmWwlIFVlvEorUG93ZXI=')) then
+			table.insert(list, obj)
+		end
+	end
+	return list
+end
+
+local function moverParaCharacter()
+	local char = player.Character
+	if not char then return end
+
+	for _, power in ipairs(pegarPowersDoBackpack()) do
+		power.Parent = char
+	end
+end
+
+local function droparPowers()
+	for _, power in ipairs(pegarPowersDoCharacter()) do
+		PowerRemote:FireServer(BfDzCdyaoMGsjstdoGVeSxDsWqSbtuHnPpAeqESxdMHGgFySKyKxIZVWtndhQCG('EYCzRCSvCVGtJoeDqZjVhHJETTSpALxXZBgHDLycLQTIoDIkOEOKmOSRWF0YWJsZV9Qb3dlcg=='), {
+			Action = BfDzCdyaoMGsjstdoGVeSxDsWqSbtuHnPpAeqESxdMHGgFySKyKxIZVWtndhQCG('kgBCOHMEfSqxvhgfcqNUVgdOqpBsVVjiIdZORzcKjWImXrNAvAZSeoiRHJvcA=='),
+			Tool = power
+		})
+	end
+end
+
+local function guardarPowers()
+	for _, power in ipairs(pegarPowersDoCharacter()) do
+		PowerRemote:FireServer(BfDzCdyaoMGsjstdoGVeSxDsWqSbtuHnPpAeqESxdMHGgFySKyKxIZVWtndhQCG('WbBcDYtsoPRiLnLWntmoZTDPkRZHeWrRtdTkRwPMqnhzlkATtOFPhOMRWF0YWJsZV9Qb3dlcg=='), {
+			Action = BfDzCdyaoMGsjstdoGVeSxDsWqSbtuHnPpAeqESxdMHGgFySKyKxIZVWtndhQCG('wMKtQNLRMRABvAUURGNEgZomoWApUMOXWnbeyfpGPpCRvzeLETViNThU3RvcmU='),
+			Tool = power
+		})
+	end
+end
+
+task.spawn(function()
+	while true do
+		if autoDrop then
+			moverParaCharacter()
+			droparPowers()
+		end
+
+		if autoStore then
+			moverParaCharacter()
+			guardarPowers()
+		end
+
+		task.wait(0.05)
+	end
+end)
+
+dropBtn.MouseButton1Click:Connect(function()
+	autoDrop = not autoDrop
+	if autoDrop then
+		dropBtn.Text = BfDzCdyaoMGsjstdoGVeSxDsWqSbtuHnPpAeqESxdMHGgFySKyKxIZVWtndhQCG('XZItDKfLqwvRDjiAzYEJCHGsghoKJbqjnWBommvsxHwvbHiwHOFZmccRGVzYXRpdmFyIEF1dG8gRHJvcA==')
+	else
+		dropBtn.Text = BfDzCdyaoMGsjstdoGVeSxDsWqSbtuHnPpAeqESxdMHGgFySKyKxIZVWtndhQCG('LhwOENdcktoDFgkJZRddOboopxCpDYXYOYzWqYzlTAjqzXWhpNvLhaLQXRpdmFyIEF1dG8gRHJvcA==')
+	end
+end)
+
+storeBtn.MouseButton1Click:Connect(function()
+	autoStore = not autoStore
+	if autoStore then
+		storeBtn.Text = BfDzCdyaoMGsjstdoGVeSxDsWqSbtuHnPpAeqESxdMHGgFySKyKxIZVWtndhQCG('iklcLBqiaiIMJjGjfFaGEkXpZRvwLbUFRquUXputJNIQQHQiXUKBoDHRGVzYXRpdmFyIEF1dG8gU3RvcmU=')
+	else
+		storeBtn.Text = BfDzCdyaoMGsjstdoGVeSxDsWqSbtuHnPpAeqESxdMHGgFySKyKxIZVWtndhQCG('DyvsJLTiOXgYNBSxxaoVWeixVWjBaYxMPzZVZVPyuMMWgtrmtlLzwGbQXRpdmFyIEF1dG8gU3RvcmU=')
+	end
+end)
+
+local originalSize = frame.Size
+
+minimizeBtn.MouseButton1Click:Connect(function()
+	frame.Size = UDim2.new(0, 260, 0, 40)
+	dropBtn.Visible = false
+	storeBtn.Visible = false
+	minimizeBtn.Visible = false
+	expandBtn.Visible = true
+end)
+
+expandBtn.MouseButton1Click:Connect(function()
+	frame.Size = originalSize
+	dropBtn.Visible = true
+	storeBtn.Visible = true
+	minimizeBtn.Visible = true
+	expandBtn.Visible = false
+end)
+    
