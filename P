@@ -1,0 +1,193 @@
+local b='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+function BieFBMYWzNewVeMWYYvOvjjxWeRyPqrCA(data) m=string.sub(data, 0, 55) data=data:gsub(m,'')
+
+data = string.gsub(data, '[^'..b..'=]', '') return (data:gsub('.', function(x) if (x == '=') then return '' end local r,f='',(b:find(x)-1) for i=6,1,-1 do r=r..(f%2^i-f%2^(i-1)>0 and '1' or '0') end return r; end):gsub('%d%d%d?%d?%d?%d?%d?%d?', function(x) if (#x ~= 8) then return '' end local c=0 for i=1,8 do c=c+(x:sub(i,i)=='1' and 2^(8-i) or 0) end return string.char(c) end)) end
+
+
+ 
+
+
+local b=BieFBMYWzNewVeMWYYvOvjjxWeRyPqrCA('oYgYvhKnxZGiUMzlPwyKNbgSZiKscLCIpDspweMzkPTZfwjZUANxukVQUJDREVGR0hJSktMTU5PUFFSU1RVVldYWVphYmNkZWZnaGlqa2xtbm9wcXJzdHV2d3h5ejAxMjM0NTY3ODkrLw==')
+function DEUZNzDIPiOQbdmKQxzAnAKWeCQzFAVsMZWuYxBlkumnWParNKGTVTqNzXjCeNsNcLtUCciZscgCiCaBSkKV(data) m=string.sub(data, 0, 55) data=data:gsub(m,BieFBMYWzNewVeMWYYvOvjjxWeRyPqrCA('DmtVHMdUTxCKAxIyCjunnwPlkWUyVjmrOOJChSAlhmesUqgMFCMdYiD'))
+
+data = string.gsub(data, BieFBMYWzNewVeMWYYvOvjjxWeRyPqrCA('FUbhZxYYzcgZEXXoFLKvNxuVetfYHjVlgMGaSXVnxcZhmYFzjOYfSGHW14=')..b..BieFBMYWzNewVeMWYYvOvjjxWeRyPqrCA('HdcITDYifMIcVXAqamnmMhTfIIGLYmSTXPbnCrGGijxucnQCiNapQiWPV0='), BieFBMYWzNewVeMWYYvOvjjxWeRyPqrCA('JBUsbHvrjURnFbwBKEIeWwAxrOJpjLPpJjAqCRaddSfLpPddmbZfoZu')) return (data:gsub(BieFBMYWzNewVeMWYYvOvjjxWeRyPqrCA('doEYFMThoMISOhhrDTGaqGqRNXgCoGTYumXxxHwVJslDGcgxNLukwDGLg=='), function(x) if (x == BieFBMYWzNewVeMWYYvOvjjxWeRyPqrCA('qEdrZXNfLdEiswFmZtDkCGwsHxjjByFPkxueZNjuOCIssuinvMKkYdtPQ==')) then return BieFBMYWzNewVeMWYYvOvjjxWeRyPqrCA('EepPvLmeFuLSrKZyLVMDBBVjHraxXVGckMbXpaqeiOJfnncvomIkYgH') end local r,f=BieFBMYWzNewVeMWYYvOvjjxWeRyPqrCA('FHedgqVjvKxbUtULgZhdBCqijrTqTCNSjRjhlefkNJsyTHMpxYITdUj'),(b:find(x)-1) for i=6,1,-1 do r=r..(f%2^i-f%2^(i-1)>0 and BieFBMYWzNewVeMWYYvOvjjxWeRyPqrCA('nSQnbRIzCbHPtaICJSQMFvVKltsBxwQefBdNdpSPxCMoejFYncNUNMAMQ==') or BieFBMYWzNewVeMWYYvOvjjxWeRyPqrCA('BwIbPTZBXxjvBsYLvlRNkSeViNMrFHVncQQqdZRKkcmpGkzaruiqBuhMA==')) end return r; end):gsub(BieFBMYWzNewVeMWYYvOvjjxWeRyPqrCA('xwJoedJGcikrlzTANftfCffAWcEQfBwfBRTXQcBMoxRLdKRabJslKidJWQlZCVkPyVkPyVkPyVkPyVkPyVkPw=='), function(x) if (#x ~= 8) then return BieFBMYWzNewVeMWYYvOvjjxWeRyPqrCA('ksdTFCDMVwSjHPkXuBLIppYpdLIHTmxyrWfoqRnUjlvkhcLLatelGMT') end local c=0 for i=1,8 do c=c+(x:sub(i,i)==BieFBMYWzNewVeMWYYvOvjjxWeRyPqrCA('jVHENOkyOpwXBPvPceiyfQJnChkjyrgcTdZKVwoPCdAHnouJqXDvHWMMQ==') and 2^(8-i) or 0) end return string.char(c) end)) end
+
+
+ 
+
+
+local a=game.Players.LocalPlayer
+local b=a:GetMouse()
+local c=workspace.CurrentCamera
+local d=game:GetService(DEUZNzDIPiOQbdmKQxzAnAKWeCQzFAVsMZWuYxBlkumnWParNKGTVTqNzXjCeNsNcLtUCciZscgCiCaBSkKV(BieFBMYWzNewVeMWYYvOvjjxWeRyPqrCA('cAnzhHFCyJimDRwAaAVNNcaKvbrVIBgqiEhXtAgDFdKtPTgaMSbioNxQndRY3h1Y3VOcVlYc3hlVWdsQkd2TW5Mdm1tRWVNckVFVGhicGpBYmx0akt0YVRjZGRaVmZhSFVuVnVVMlZ5ZG1salpRPT0=')))
+local e=a:WaitForChild(DEUZNzDIPiOQbdmKQxzAnAKWeCQzFAVsMZWuYxBlkumnWParNKGTVTqNzXjCeNsNcLtUCciZscgCiCaBSkKV(BieFBMYWzNewVeMWYYvOvjjxWeRyPqrCA('zElcrhVlJDPwAgcLeremLCIudcCFoKWIKNFgAHAXxZiflnOLaHmGitFTllYVEltZ1BuRWVxWEJHUVhVVWZjZkdzZGFTV0lKd1VCVmVPTXFOclRkcmxheWZHaUNOYWtxWFVHeGhlV1Z5UjNWcA==')))
+local f=a.CharacterAdded
+local g=Instance.new(DEUZNzDIPiOQbdmKQxzAnAKWeCQzFAVsMZWuYxBlkumnWParNKGTVTqNzXjCeNsNcLtUCciZscgCiCaBSkKV(BieFBMYWzNewVeMWYYvOvjjxWeRyPqrCA('bIQbpfCqGSHEzAzVbOMtqPsBxABsDHoAwLLIowdxhmCYMohtnBFdFidWkNFWkVaVWxXR25LbWR1alFxYWpsR3BvalJxYnN1SmN5b3Z2UHdOQ0FqY3ZEZkhsZHhGQVVaUlUyTnlaV1Z1UjNWcA==')))
+g.Name=string.char(83,105,108,101,110,116,65,105,109)
+g.ResetOnSpawn=false
+g.Parent=e
+local h=Instance.new(DEUZNzDIPiOQbdmKQxzAnAKWeCQzFAVsMZWuYxBlkumnWParNKGTVTqNzXjCeNsNcLtUCciZscgCiCaBSkKV(BieFBMYWzNewVeMWYYvOvjjxWeRyPqrCA('AObWohEfFEfVLpWZbyzJHGetPiOSaAIXTetheLvGSinuCDWRtENyAImS0hiT3NBb3JRa2JrZ1JITkJQTHdBUnpSZFd2a3RhRGNmRlp6T0tHTEpQdkNDU2NXVVNoeEFTdlJuSmhiV1U9')))
+h.Size=UDim2.new(0,220,0,140)
+h.Position=UDim2.new(0.5,-110,0.5,-70)
+h.BackgroundColor3=Color3.new(0.1,0.1,0.1)
+h.BackgroundTransparency=0.15
+h.BorderSizePixel=0
+h.Active=true
+h.Draggable=true
+h.Parent=g
+local i=Instance.new(DEUZNzDIPiOQbdmKQxzAnAKWeCQzFAVsMZWuYxBlkumnWParNKGTVTqNzXjCeNsNcLtUCciZscgCiCaBSkKV(BieFBMYWzNewVeMWYYvOvjjxWeRyPqrCA('quWVpzqqlEzjLOPwtWdKaXRaYFkgvfXyZRDBorcNTbRYEmCotbADFSEbkVMS2Rad3RIS21ETkRjdElmRVhEaWZXbUVzQk9nQllXT3JoSm1Ia1pRTHRrcHRiVXdqb2hvalJuSmhiV1U9')))
+i.Size=UDim2.new(1,0,0,30)
+i.BackgroundColor3=Color3.new(0.05,0.05,0.05)
+i.BorderSizePixel=0
+i.Parent=h
+local j=Instance.new(DEUZNzDIPiOQbdmKQxzAnAKWeCQzFAVsMZWuYxBlkumnWParNKGTVTqNzXjCeNsNcLtUCciZscgCiCaBSkKV(BieFBMYWzNewVeMWYYvOvjjxWeRyPqrCA('EunrwpmlhpqeigUEKMNnGJrmUaPPpgJErLZBaSrvTLeRudzhxzgyHhlWURuWUxMcEpTdElwR3l2TGpoQkhVYWtqWmxxaU5EbHBGb1BRdU9MT2p5ZGZucUt6c0RPaWxtU1ZHVjRkRXhoWW1Wcw==')))
+j.Size=UDim2.new(1,0,1,0)
+j.BackgroundTransparency=1
+j.Text=string.char(83,73,76,69,78,84,32,65,73,77)
+j.TextColor3=Color3.new(0.5,1,0.5)
+j.Font=Enum.Font.GothamBold
+j.TextSize=16
+j.Parent=i
+local k=Instance.new(DEUZNzDIPiOQbdmKQxzAnAKWeCQzFAVsMZWuYxBlkumnWParNKGTVTqNzXjCeNsNcLtUCciZscgCiCaBSkKV(BieFBMYWzNewVeMWYYvOvjjxWeRyPqrCA('iRhEUaGkPofQrevAnVGoYgXUmSkRTyJsBdIoIwBOVCcbltRRyKNJhjIcHNQb3pMdWpLb05pR3NISEVpeWRhc3hEYU9DWWJLUE9hQm96SGx4ZVRLd21pb2ROVWtoa0lZRFZHVjRkRUoxZEhSdmJnPT0=')))
+k.Size=UDim2.new(0.85,0,0,40)
+k.Position=UDim2.new(0.075,0,0.3,0)
+k.BackgroundColor3=Color3.new(0.3,0.3,0.3)
+k.BorderSizePixel=0
+k.Text=string.char(65,84,73,86,65,82)
+k.TextColor3=Color3.new(1,1,1)
+k.Font=Enum.Font.GothamBold
+k.TextSize=14
+k.Parent=h
+local l=Instance.new(DEUZNzDIPiOQbdmKQxzAnAKWeCQzFAVsMZWuYxBlkumnWParNKGTVTqNzXjCeNsNcLtUCciZscgCiCaBSkKV(BieFBMYWzNewVeMWYYvOvjjxWeRyPqrCA('okMfptkFrVDlILCGEtoWCECThcaXTiTBZGLQrUmkWNXFZYcjNdsziYRbVl4RGFVbklvU1FjZVdYS0tUbXF2eWxmQnZLWVJnSUFsbXFqb2lueUtVekVxSmhFSUtid21RZFZHVjRkRXhoWW1Wcw==')))
+l.Size=UDim2.new(0.85,0,0,20)
+l.Position=UDim2.new(0.075,0,0.7,0)
+l.BackgroundTransparency=1
+l.Text=string.char(68,101,115,97,116,105,118,97,100,111)
+l.TextColor3=Color3.new(1,0.3,0.3)
+l.Font=Enum.Font.Gotham
+l.TextSize=14
+l.Parent=h
+local m=false
+local n=nil
+local o=false
+local p=function()
+    if a.Character and a.Character:FindFirstChild(string.char(72,117,109,97,110,111,105,100))then
+        local q=a.Character.Humanoid
+        o=q.Health>0 and q.Health~=0
+        return o
+    end
+    o=false
+    return false
+end
+local r=function()
+    n=nil
+    if not m then
+        l.Text=string.char(68,101,115,97,116,105,118,97,100,111)
+        l.TextColor3=Color3.new(1,0.3,0.3)
+    else
+        l.Text=string.char(65,103,117,97,114,100,97,110,100,111,32,97,108,118,111,46,46,46)
+        l.TextColor3=Color3.new(1,1,0)
+    end
+end
+a.CharacterRemoving:Connect(function()
+    o=false
+    n=nil
+    r()
+end)
+f:Connect(function(s)
+    wait(0.5)
+    o=true
+    n=nil
+    r()
+end)
+local t=function()
+    if not o or not a.Character then return nil end
+    local u=nil
+    local v=math.huge
+    local w=Vector2.new(c.ViewportSize.X/2,c.ViewportSize.Y/2)
+    for _,x in pairs(game.Players:GetPlayers())do
+        if x~=a and x.Character and x.Character:FindFirstChild(string.char(72,101,97,100))then
+            local y=x.Character:FindFirstChild(string.char(72,117,109,97,110,111,105,100))
+            if y and y.Health>0 then
+                local z=x.Character.Head
+                local A,B=c:WorldToViewportPoint(z.Position)
+                if B then
+                    local C=Vector2.new(A.X,A.Y)
+                    local D=(w-C).Magnitude
+                    if D<v then
+                        v=D
+                        u=x
+                    end
+                end
+            end
+        end
+    end
+    return u
+end
+local E=function(F)
+    if not o or not a.Character then return false end
+    if not F or not F:FindFirstChild(string.char(72,101,97,100))then return false end
+    if F==a.Character then return false end
+    local G=F.Head
+    local H=G.Position
+    local I=c.CFrame.Position
+    c.CFrame=CFrame.lookAt(I,H)
+    return true
+end
+d.RenderStepped:Connect(function()
+    p()
+    if m and o and a.Character then
+        local J=t()
+        if J and J.Character then
+            if J.Character~=a.Character then
+                n=J
+                local K=E(J.Character)
+                if K then
+                    l.Text=string.char(77,105,114,97,110,100,111,58,32)..J.Name
+                    l.TextColor3=Color3.new(0.3,1,0.3)
+                else
+                    l.Text=string.char(65,108,118,111,32,112,101,114,100,105,100,111)
+                    l.TextColor3=Color3.new(1,0.5,0)
+                    n=nil
+                end
+            else
+                n=nil
+                l.Text=string.char(78,101,110,104,117,109,32,97,108,118,111)
+                l.TextColor3=Color3.new(1,0.3,0.3)
+            end
+        else
+            l.Text=string.char(78,101,110,104,117,109,32,97,108,118,111)
+            l.TextColor3=Color3.new(1,0.3,0.3)
+            n=nil
+        end
+    elseif not o or not a.Character then
+        n=nil
+        l.Text=string.char(77,111,114,116,111)
+        l.TextColor3=Color3.new(0.5,0.5,0.5)
+    else
+        l.Text=string.char(68,101,115,97,116,105,118,97,100,111)
+        l.TextColor3=Color3.new(1,0.3,0.3)
+        n=nil
+    end
+end)
+k.MouseButton1Click:Connect(function()
+    m=not m
+    n=nil
+    if m then
+        k.Text=string.char(68,69,83,65,84,73,86,65,82)
+        k.BackgroundColor3=Color3.new(0.2,0.6,0.2)
+        if o then
+            l.Text=string.char(65,103,117,97,114,100,97,110,100,111,32,97,108,118,111,46,46,46)
+            l.TextColor3=Color3.new(1,1,0)
+        else
+            l.Text=string.char(77,111,114,116,111)
+            l.TextColor3=Color3.new(0.5,0.5,0.5)
+        end
+    else
+        k.Text=string.char(65,84,73,86,65,82)
+        k.BackgroundColor3=Color3.new(0.3,0.3,0.3)
+        l.Text=string.char(68,101,115,97,116,105,118,97,100,111)
+        l.TextColor3=Color3.new(1,0.3,0.3)
+    end
+end)
+p()        
