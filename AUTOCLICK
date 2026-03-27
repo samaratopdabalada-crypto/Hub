@@ -1,0 +1,261 @@
+local player = game.Players.LocalPlayer
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = player.PlayerGui
+
+local mainFrame = Instance.new("Frame")
+mainFrame.Size = UDim2.new(0, 280, 0, 200)
+mainFrame.Position = UDim2.new(0.5, -140, 0.7, 0)
+mainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
+mainFrame.BackgroundTransparency = 0.05
+mainFrame.BorderSizePixel = 0
+mainFrame.Parent = screenGui
+
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 16)
+corner.Parent = mainFrame
+
+local titleBar = Instance.new("Frame")
+titleBar.Size = UDim2.new(1, 0, 0, 45)
+titleBar.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
+titleBar.BorderSizePixel = 0
+titleBar.Parent = mainFrame
+
+local titleCorner = Instance.new("UICorner")
+titleCorner.CornerRadius = UDim.new(0, 16)
+titleCorner.Parent = titleBar
+
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, -45, 1, 0)
+title.Position = UDim2.new(0, 15, 0, 0)
+title.BackgroundTransparency = 1
+title.Text = "AUTO CLICKER"
+title.TextColor3 = Color3.fromRGB(255, 200, 100)
+title.TextSize = 16
+title.Font = Enum.Font.GothamBold
+title.TextXAlignment = Enum.TextXAlignment.Left
+title.Parent = titleBar
+
+local closeBtn = Instance.new("TextButton")
+closeBtn.Size = UDim2.new(0, 32, 0, 32)
+closeBtn.Position = UDim2.new(1, -42, 0.5, -16)
+closeBtn.BackgroundColor3 = Color3.fromRGB(200, 70, 70)
+closeBtn.Text = "X"
+closeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+closeBtn.TextSize = 18
+closeBtn.Font = Enum.Font.GothamBold
+closeBtn.BorderSizePixel = 0
+closeBtn.Parent = titleBar
+
+local closeCorner = Instance.new("UICorner")
+closeCorner.CornerRadius = UDim.new(0, 8)
+closeCorner.Parent = closeBtn
+
+local divider = Instance.new("Frame")
+divider.Size = UDim2.new(0.9, 0, 0, 1)
+divider.Position = UDim2.new(0.05, 0, 0, 45)
+divider.BackgroundColor3 = Color3.fromRGB(100, 100, 120)
+divider.BackgroundTransparency = 0.5
+divider.Parent = mainFrame
+
+local btnCursor = Instance.new("TextButton")
+btnCursor.Size = UDim2.new(0.44, 0, 0, 45)
+btnCursor.Position = UDim2.new(0.04, 0, 0, 60)
+btnCursor.BackgroundColor3 = Color3.fromRGB(80, 100, 180)
+btnCursor.Text = "ENABLE CURSOR"
+btnCursor.TextColor3 = Color3.fromRGB(255, 255, 255)
+btnCursor.TextSize = 12
+btnCursor.Font = Enum.Font.GothamBold
+btnCursor.Parent = mainFrame
+
+local btnCorner1 = Instance.new("UICorner")
+btnCorner1.CornerRadius = UDim.new(0, 8)
+btnCorner1.Parent = btnCursor
+
+local btnClick = Instance.new("TextButton")
+btnClick.Size = UDim2.new(0.44, 0, 0, 45)
+btnClick.Position = UDim2.new(0.52, 0, 0, 60)
+btnClick.BackgroundColor3 = Color3.fromRGB(80, 160, 80)
+btnClick.Text = "START"
+btnClick.TextColor3 = Color3.fromRGB(255, 255, 255)
+btnClick.TextSize = 12
+btnClick.Font = Enum.Font.GothamBold
+btnClick.Parent = mainFrame
+
+local btnCorner2 = Instance.new("UICorner")
+btnCorner2.CornerRadius = UDim.new(0, 8)
+btnCorner2.Parent = btnClick
+
+local speedText = Instance.new("TextLabel")
+speedText.Size = UDim2.new(0.9, 0, 0, 20)
+speedText.Position = UDim2.new(0.05, 0, 0, 115)
+speedText.BackgroundTransparency = 1
+speedText.Text = "SPEED: 60 CLICKS/SEC"
+speedText.TextColor3 = Color3.fromRGB(180, 180, 200)
+speedText.TextSize = 10
+speedText.Parent = mainFrame
+
+local statusFrame = Instance.new("Frame")
+statusFrame.Size = UDim2.new(0.9, 0, 0, 40)
+statusFrame.Position = UDim2.new(0.05, 0, 0, 140)
+statusFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+statusFrame.BorderSizePixel = 0
+statusFrame.Parent = mainFrame
+
+local statusCorner = Instance.new("UICorner")
+statusCorner.CornerRadius = UDim.new(0, 8)
+statusCorner.Parent = statusFrame
+
+local status = Instance.new("TextLabel")
+status.Size = UDim2.new(1, 0, 1, 0)
+status.BackgroundTransparency = 1
+status.Text = "OFF"
+status.TextColor3 = Color3.fromRGB(150, 150, 150)
+status.TextSize = 11
+status.Parent = statusFrame
+
+local cursor = Instance.new("Frame")
+cursor.Size = UDim2.new(0, 60, 0, 60)
+cursor.Position = UDim2.new(0.5, -30, 0.5, -30)
+cursor.BackgroundColor3 = Color3.fromRGB(255, 80, 80)
+cursor.BackgroundTransparency = 0.2
+cursor.BorderSizePixel = 3
+cursor.BorderColor3 = Color3.fromRGB(255, 50, 50)
+cursor.Visible = false
+cursor.Parent = screenGui
+
+local cursorCorner = Instance.new("UICorner")
+cursorCorner.CornerRadius = UDim.new(0, 30)
+cursorCorner.Parent = cursor
+
+local cursorText = Instance.new("TextLabel")
+cursorText.Size = UDim2.new(1, 0, 1, 0)
+cursorText.BackgroundTransparency = 1
+cursorText.Text = "●"
+cursorText.TextColor3 = Color3.fromRGB(255, 255, 255)
+cursorText.TextSize = 42
+cursorText.Font = Enum.Font.GothamBold
+cursorText.Parent = cursor
+
+local cursorActive = false
+local clickActive = false
+local draggingCursor = false
+local clickLoop = nil
+
+local function clickAt(x, y)
+    local VirtualInput = game:GetService("VirtualInputManager")
+    VirtualInput:SendMouseButtonEvent(x, y, 0, true, game, 0)
+    VirtualInput:SendMouseButtonEvent(x, y, 0, false, game, 0)
+end
+
+cursor.InputBegan:Connect(function(input)
+    if cursorActive then
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            draggingCursor = true
+        end
+    end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+    if draggingCursor and cursorActive then
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            cursor.Position = UDim2.new(0, input.Position.X - 30, 0, input.Position.Y - 30)
+        end
+    end
+end)
+
+UserInputService.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        draggingCursor = false
+    end
+end)
+
+btnCursor.MouseButton1Click:Connect(function()
+    cursorActive = not cursorActive
+    cursor.Visible = cursorActive
+    if cursorActive then
+        btnCursor.BackgroundColor3 = Color3.fromRGB(200, 100, 100)
+        btnCursor.Text = "CURSOR ON"
+        status.Text = "DRAG THE RED CIRCLE"
+        status.TextColor3 = Color3.fromRGB(100, 255, 100)
+    else
+        btnCursor.BackgroundColor3 = Color3.fromRGB(80, 100, 180)
+        btnCursor.Text = "ENABLE CURSOR"
+        status.Text = "OFF"
+        status.TextColor3 = Color3.fromRGB(150, 150, 150)
+        if clickActive then
+            clickActive = false
+            btnClick.BackgroundColor3 = Color3.fromRGB(80, 160, 80)
+            btnClick.Text = "START"
+            if clickLoop then clickLoop:Disconnect() end
+        end
+    end
+end)
+
+btnClick.MouseButton1Click:Connect(function()
+    if not cursorActive then
+        status.Text = "ENABLE CURSOR FIRST"
+        status.TextColor3 = Color3.fromRGB(255, 100, 100)
+        return
+    end
+    
+    clickActive = not clickActive
+    
+    if clickActive then
+        btnClick.BackgroundColor3 = Color3.fromRGB(200, 100, 100)
+        btnClick.Text = "STOP"
+        status.Text = "CLICKING 60X/SEC"
+        status.TextColor3 = Color3.fromRGB(100, 255, 100)
+        
+        clickLoop = RunService.Heartbeat:Connect(function()
+            if clickActive and cursor.Visible then
+                local x = cursor.AbsolutePosition.X + 30
+                local y = cursor.AbsolutePosition.Y + 30
+                clickAt(x, y)
+            end
+        end)
+    else
+        btnClick.BackgroundColor3 = Color3.fromRGB(80, 160, 80)
+        btnClick.Text = "START"
+        status.Text = "STOPPED"
+        status.TextColor3 = Color3.fromRGB(255, 100, 100)
+        if clickLoop then
+            clickLoop:Disconnect()
+            clickLoop = nil
+        end
+    end
+end)
+
+closeBtn.MouseButton1Click:Connect(function()
+    if clickLoop then clickLoop:Disconnect() end
+    screenGui:Destroy()
+end)
+
+local draggingFrame = false
+local dragStart = nil
+local frameStartPos = nil
+
+titleBar.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        draggingFrame = true
+        dragStart = input.Position
+        frameStartPos = mainFrame.Position
+    end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+    if draggingFrame then
+        if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+            local delta = input.Position - dragStart
+            mainFrame.Position = UDim2.new(frameStartPos.X.Scale, frameStartPos.X.Offset + delta.X, frameStartPos.Y.Scale, frameStartPos.Y.Offset + delta.Y)
+        end
+    end
+end)
+
+UserInputService.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        draggingFrame = false
+    end
+end)
