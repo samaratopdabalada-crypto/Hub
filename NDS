@@ -1,0 +1,179 @@
+local player = game.Players.LocalPlayer
+local runService = game:GetService("RunService")
+
+if player.PlayerGui:FindFirstChild("PipocaHub") then
+	player.PlayerGui.PipocaHub:Destroy()
+end
+
+local gui = Instance.new("ScreenGui")
+gui.Name = "PipocaHub"
+gui.Parent = player.PlayerGui
+gui.ResetOnSpawn = false
+
+local settings = {
+	g = false,
+	f = false,
+	ab = false,
+	as = false,
+	nc = false,
+	af = false
+}
+
+local btn = Instance.new("TextButton")
+btn.Size = UDim2.new(0, 55, 0, 55)
+btn.Position = UDim2.new(0, 15, 0, 150)
+btn.BackgroundColor3 = Color3.fromRGB(255, 200, 0)
+btn.Text = "🍿"
+btn.TextColor3 = Color3.fromRGB(0, 0, 0)
+btn.TextSize = 30
+btn.Font = Enum.Font.GothamBold
+btn.BorderSizePixel = 0
+btn.Parent = gui
+
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 27)
+corner.Parent = btn
+
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 220, 0, 300)
+frame.Position = UDim2.new(0.5, -110, 0.5, -150)
+frame.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+frame.Visible = false
+frame.Active = true
+frame.Draggable = true
+frame.Parent = gui
+
+local frameCorner = Instance.new("UICorner")
+frameCorner.CornerRadius = UDim.new(0, 12)
+frameCorner.Parent = frame
+
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, 0, 0, 40)
+title.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+title.Text = "🍿 PIPOCA HUB"
+title.TextColor3 = Color3.fromRGB(255, 200, 0)
+title.Font = Enum.Font.Legacy
+title.TextScaled = true
+title.Parent = frame
+
+local subtitle = Instance.new("TextLabel")
+subtitle.Size = UDim2.new(1, 0, 0, 25)
+subtitle.Position = UDim2.new(0, 0, 0, 40)
+subtitle.BackgroundTransparency = 1
+subtitle.Text = "by Thiagocag23"
+subtitle.TextColor3 = Color3.fromRGB(150, 150, 150)
+subtitle.Font = Enum.Font.Legacy
+subtitle.TextScaled = true
+subtitle.Parent = frame
+
+local close = Instance.new("TextButton")
+close.Size = UDim2.new(0, 25, 0, 25)
+close.Position = UDim2.new(1, -32, 0, 8)
+close.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+close.Text = "X"
+close.TextColor3 = Color3.fromRGB(255, 255, 255)
+close.TextSize = 14
+close.Font = Enum.Font.GothamBold
+close.Parent = frame
+
+local closeCorner = Instance.new("UICorner")
+closeCorner.CornerRadius = UDim.new(0, 5)
+closeCorner.Parent = close
+
+local function criarBotao(nome, posY, key)
+	local btnOpt = Instance.new("TextButton")
+	btnOpt.Size = UDim2.new(0.9, 0, 0, 35)
+	btnOpt.Position = UDim2.new(0.05, 0, 0, posY)
+	btnOpt.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
+	btnOpt.Text = nome .. ": OFF"
+	btnOpt.TextColor3 = Color3.fromRGB(255, 200, 0)
+	btnOpt.Font = Enum.Font.Legacy
+	btnOpt.TextSize = 14
+	btnOpt.Parent = frame
+	
+	local btnCorner = Instance.new("UICorner")
+	btnCorner.CornerRadius = UDim.new(0, 6)
+	btnCorner.Parent = btnOpt
+	
+	btnOpt.MouseButton1Click:Connect(function()
+		settings[key] = not settings[key]
+		btnOpt.Text = nome .. ": " .. (settings[key] and "ON" or "OFF")
+		btnOpt.TextColor3 = settings[key] and Color3.fromRGB(0, 255, 100) or Color3.fromRGB(255, 200, 0)
+	end)
+end
+
+criarBotao("GOD MODE", 75, "g")
+criarBotao("TOUCH FLING", 115, "f")
+criarBotao("ANTI BANG", 155, "ab")
+criarBotao("ANTI SIT", 195, "as")
+criarBotao("NO COLLIDE", 235, "nc")
+criarBotao("ANTI FLING", 275, "af")
+
+btn.MouseButton1Click:Connect(function()
+	frame.Visible = not frame.Visible
+end)
+
+close.MouseButton1Click:Connect(function()
+	frame.Visible = false
+end)
+
+runService.Stepped:Connect(function()
+	if settings.nc and player.Character then
+		for _, v in pairs(player.Character:GetDescendants()) do
+			if v:IsA("BasePart") then
+				v.CanCollide = false
+			end
+		end
+	end
+end)
+
+runService.Heartbeat:Connect(function()
+	pcall(function()
+		if player.Character then
+			local root = player.Character:FindFirstChild("HumanoidRootPart")
+			local hum = player.Character:FindFirstChildOfClass("Humanoid")
+			
+			if hum then
+				if settings.g then
+					hum.Health = 100
+					hum:SetStateEnabled(15, false)
+				end
+				if settings.as then
+					hum.Sit = false
+				end
+				if hum:GetState() == Enum.HumanoidStateType.Dead then
+					hum:ChangeState(11)
+				end
+			end
+			
+			if root then
+				if settings.af and not settings.f then
+					if root.AssemblyLinearVelocity.Magnitude > 60 or root.AssemblyAngularVelocity.Magnitude > 60 then
+						root.AssemblyLinearVelocity = Vector3.zero
+						root.AssemblyAngularVelocity = Vector3.zero
+					end
+				end
+				if settings.f then
+					local vel = root.AssemblyLinearVelocity
+					root.AssemblyLinearVelocity = vel * 1000 + Vector3.new(0, 8000, 0)
+					runService.RenderStepped:Wait()
+					root.AssemblyLinearVelocity = vel
+				end
+			end
+			
+			for _, v in pairs(player.Character:GetDescendants()) do
+				if v:IsA("TouchTransmitter") then
+					if v.Parent and not (v.Parent.Name:find("Leg") or v.Parent.Name:find("Foot")) then
+						v:Destroy()
+					end
+				end
+				if settings.ab and (v:IsA("JointInstance") or v:IsA("WeldConstraint")) then
+					local p0, p1 = v.Part0, v.Part1
+					if (p0 and not p0:IsDescendantOf(player.Character)) or (p1 and not p1:IsDescendantOf(player.Character)) then
+						v:Destroy()
+					end
+				end
+			end
+		end
+	end)
+end)
